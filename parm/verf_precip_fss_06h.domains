@@ -1,0 +1,33 @@
+###############################################################################
+# This data input card defines the input variables for the script to process 
+# the FSS computation, where the
+#   1st entry: Model Name
+#   2nd entry: Verification cycle(s)
+#   3rd entry: Precip budket length
+#   4th entry: The model forecast range that is used for the verification
+#   5th entry: Optional: alternative source of model QPF data? (for dev)
+#
+# Note: if you need to add a new model, please add it to the end of this file.
+###############################################################################
+#model|cycles|bucket length|fcst range|source of $COMIN (altcomin is from prod)
+#=========================================
+nam|00 12|12|84|
+nam|06 18|03|84|
+namx|00 12|12|84|
+namx|06 18|03|84|
+namb|00 12|12|84|
+namb|06 18|03|84|
+gfs|00 06 12 18|06|180|
+conusnest|00 06 12 18|03|60|
+conusnestx|00 12|03|60|
+conusarw|00 12|03|48|
+conusarw2|00 12|03|48|
+conusnmmb|00 12|03|48|
+namrr|00 12|12|84|
+namrr|06 18|03|84|
+conusrr|00 06 12 18|03|60|
+hrrr|00 06 12 18|01|36|
+nssl4arw|00 12|36|36|
+rap|00 03 06 09 12 15 18 21|01|39|
+jma|00 12|06|84|
+

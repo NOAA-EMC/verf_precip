@@ -1,0 +1,12 @@
+##################################################################
+# This parameter file set up the environment variables used in
+# the J-Job scripts to run the grid2grid verifications
+##################################################################
+
+# COM_IN, COM_OUT, COMVSDB, DATA_IN exported from ECF script.  
+export jlogfile=$DATA_IN/jlogfile
+
+export SENDCOM=${SENDCOM:-YES}
+export SENDECF=${SENDECF:-NO}
+export SENDDBN=${SENDDBN:-NO}
+

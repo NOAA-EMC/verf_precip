@@ -1,0 +1,10 @@
+export run_nam=1
+export run_gfs=1
+export run_conusnest=1
+export run_conusarw=1
+export run_conusarw2=1
+export run_conusnmmb=1
+export run_hrrr=1
+export run_rap=1
+export run_nssl4arw=1
+export run_jma=1

@@ -1,0 +1,78 @@
+#!/bin/bash
+#BSUB -J jverf_precip_verfgen03
+#BSUB -o /gpfs/dell2/ptmp/Ying.Lin/cron.out/verfgen03.%J
+#BSUB -e /gpfs/dell2/ptmp/Ying.Lin/cron.out/verfgen03.%J
+#BSUB -n 1
+#BSUB -q "dev"
+#BSUB -W 2:00
+#BSUB -P VERF-T2O
+#BSUB -R span[ptile=1]
+
+# why 'BSUB -L /bin/sh' above: this job is bsub'd at the end of GETPPT.
+# 'BSUB -L login_shell ensures that variables exported by GETPPT (e.g. vday)
+# will not be propagated to the environment of verfgen_03h.  
+set -x
+module purge
+module load ips/18.0.5.274    # for prod_util
+module load prod_util/1.1.3
+module load prod_envir/1.0.3
+module load grib_util/1.1.1
+
+export envir=dev
+export cyc=00
+export vhour=03h
+export job=verf_precip_verfgen_03h
+export RUN_ENVIR=dev
+export retro=N
+export debug=N
+
+export version=v4.3.2
+
+# This script has three optional arguments if run interactively.  WCOSS LSF 
+# (bsub) does not accept arguments in the LSF script, in that case, set up
+# up as environmental variables.  To make this thing more flexible, arg 2 
+# and/or 3 can be either 'debug' or 'retro'.  
+#   var 1:   vday=yyyymmdd (if vday not set, $daym2 is used in J-job)
+#   var 2/3: retro (default: no retro)
+#   var 3/2: debug (default: no debug.  In debug mode, do not delete the 
+#            working directory)
+
+if [ $# -ge 1 ]; then
+  export vday=$1
+fi
+
+if [ $# -ge 2 ]; then
+  if [ $2 = retro ]; then
+    retro=Y
+  elif [ $2 = debug ]; then
+    debug=Y
+  fi
+fi
+
+if [ $# -ge 3 ]; then
+  if [ $3 = retro ]; then
+    retro=Y
+  elif [ $3 = debug ]; then
+    debug=Y
+  fi
+fi
+
+if [ "$RUN_ENVIR" = dev ]; then        ### for dev 
+# ------------------------------------------------------
+# Most frequently made changes: 
+  export COMCCPA=`compath.py ccpa/prod`/ccpa
+  export NOSCRUB=/gpfs/dell2/emc/verification/noscrub/Ying.Lin
+  export HOMEverf_precip=$NOSCRUB/verf_precip.${version}
+  export PARMverf_precip=$HOMEverf_precip/parm
+  export DATAverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf.dat.${version}
+  export COMVSDB=$DATAverf_precip/vsdb
+# ------------------------------------------------------
+  # DATAROOT is NCO-speak for 'wrkdir'.
+  export DATAROOT=/gpfs/dell2/stmp/$LOGNAME/tmpnwprd
+# export vday=20160207 
+  export ARCH45DAY=$NOSCRUB/hold45days
+else                                   ### for prod/para/test
+  export HOMEverf_precip=/gpfs/dell1/nco/ops/nw${envir}/verf_precip.${version}
+fi # end of 'is this dev?' 
+
+$HOMEverf_precip/jobs/JVERF_PRECIP_VERFGEN_03H

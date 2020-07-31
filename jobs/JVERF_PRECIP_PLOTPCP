@@ -1,0 +1,183 @@
+#!/bin/ksh
+set -x
+
+#################################################################
+# 9/20/2009, Julia Zhu   Scripts are modified to be sharable
+#                        between EMC and NCO
+#         Please note that variable "RUN_ENVIR" is set and used
+#         in the development environment only.
+#################################################################
+
+# To quickly find important output:
+
+# ###################################
+# SET SHELL PROCESSING VARIABLES
+# ###################################
+echo Actual output starts here
+export PS4='$SECONDS + ' 
+date
+
+export machine=${machine:-wcoss}
+export RUN_ENVIR=${RUN_ENVIR:-nco}
+export SENDECF=${SENDECF:-YES}
+
+#################################################################
+# Notes for dev:
+#
+# 'export SENDEDF' above is added by prod, likely something to do
+#   with ECF.  It replaces the old 'SENDSMS'.  Its usage is not visible
+#   to dev. 
+#
+# verf_precip_config contains exports such as
+#
+#   export HOMEverf_precip=/nw{envir} (for prod; dev defines this in ecf script)
+#   export EXECverf_precip=$HOMEverf_precip/exec
+#              ...
+#   export SENDCOM= ...
+#   export SENDECF= ...
+#   export SENDDBN= ...
+#   export SENDRZDM= ... 
+#     ... 
+# Machine is wcoss by default, unless the calling script or user's 
+# .cshrc/.profile has machine set to theia.
+# End of notes for dev user
+#
+#################################################################
+
+if [ "$RUN_ENVIR" = dev ]    ### For Developers
+then
+  # PARMverf_precip is set in the ecf/sms script.  It is either 'parm' or
+  # parm.dev.$machine, under $HOMEverf_precip.  
+  . $PARMverf_precip/verf_precip_config
+
+  # ConUS: Use prod output (24h QPF on verif grid; plots) for daily precip
+  # page? This option is set in the dev ECF script.  
+  export USEPRD4PLT=${USEPRD4PLT:-YES}
+  export DATAROOT=${DATAROOT:-/tmpnwprd2}
+  export jlogfile=${jlogfile:-$DATAROOT/jlogfile}
+  export SENDDBN=NO
+  # Don't delete the working directory if this is a regular, bsub'd run, 
+  #   (cronmode = Y), since when cronmode = Y, util.dev/trans_send2rzdm.ksh
+  #   is bsub'd by scripts/exverf_precip_plotpcp.sh.ecf and needs the plots
+  #   and index.html contained in this working directory.
+  if [ $cronmode = N -a $debug = N ]; then
+    KEEPDATA=NO
+  else
+    KEEPDATA=YES
+  fi
+fi
+
+###############################################################
+# This block can be modified for different Production test
+# environment. This is used for operational testings
+###############################################################
+if [ $RUN_ENVIR = "nco" -a $envir != "prod" ]   ### For Operations
+then
+   export SENDDBN=${SENDDBN:-YES}
+   export DBNLOG=${DBNLOG:-YES}
+fi
+
+###########################################################
+# obtain unique process id (pid) and make temp directories
+###########################################################
+export pid=$$
+export DATA=$DATAROOT/${job}.${pid}
+mkdir -p $DATA
+cd $DATA 
+
+####################################
+# Determine Job Output Name on System
+####################################
+export outid="LL$job"
+export jobid="${outid}.o${pid}"
+export pgmout="OUTPUT.${pid}"
+export cycle=t${cyc}z
+
+###############################
+# Specify NET and RUN name
+###############################
+export NET=verf
+export RUN=precip
+
+################################################################
+# SENDCOM=YES--Copy output file to /com
+# SENDECF=YES--Allow to talk back to ECF
+# SENDDBN=YES--Alert output file to TOC, set to NO for testing
+################################################################
+export SENDCOM=${SENDCOM:-YES}
+export SENDDBN=${SENDDBN:-YES}       # need to set to NO for testing only
+export SENDECF=${SENDECF:-YES}
+export SENDRZDM=${SENDRZDM:-NO}      # for daily side-by-side plots
+
+################################################################
+# Specify Execution Areas
+# Non-dev uses the follwing block instead of parm/verf_precip_config
+################################################################
+export HOMEverf_precip=${HOMEverf_precip:-/gpfs/dell1/nco/ops/nw${envir}/verf_precip.${verf_precip_ver}}
+export EXECverf_precip=${EXECverf_precip:-$HOMEverf_precip/exec}
+export PARMverf_precip=${PARMverf_precip:-$HOMEverf_precip/parm}
+export USHverf_precip=${USHverf_precip:-$HOMEverf_precip/ush}
+export FIXverf_precip=${FIXverf_precip:-$HOMEverf_precip/fix}
+
+# -----------------------------------------------------------------
+# Note for dev:
+#
+# For a white background:
+## cp $GEMFIX/coltbl.xwp.wbg coltbl.xwp
+
+###################################
+# Set up the UTILITIES
+###################################
+
+# If the calling script specifies a $vday value, then PDY=$vday+1.
+if [ "$vday" != "" ]; then
+  PDY=`date -d "$vday + 1 day" +%Y%m%d`
+fi
+
+# Need to keep the Theia option around for dev.  
+# /com/date is maintained by NCO on the CCS and WCOSS, but it does not exist 
+#   on Theia.  Do not use setpdy on Theia.  
+if [ $machine = theia ]; then 
+  PDYm1=`date +%Y%m%d -d "1 day ago"`
+else
+  # Run setpdy and initialize PDY variables
+  setpdy.sh
+  . PDY
+fi
+
+# verification date is yesterday, unless the sms script has a 'vday' 
+# argument.  
+
+export vday=${vday:-$PDYm1}
+
+#################################################
+# Set up the INPUT and OUTPUT directories
+#################################################
+export COMIN=${COMIN:-$COMROOT/verf/${envir}/precip}
+export COMINpcpanl=${COMINpcpanl:-$(compath.py pcpanl/prod)}
+export COMOUT=${COMOUT:-$COMROOT/verf/${envir}/precip}
+
+if [ ! -d $COMOUT ]; then
+  mkdir -p -m 775 $COMOUT
+fi
+
+env
+
+echo 'Actual output starts here:'
+
+#######################################################################
+$HOMEverf_precip/scripts/exverf_precip_plotpcp.sh.ecf 
+#######################################################################
+
+cat $pgmout
+
+msg="JOB $job HAS COMPLETED NORMALLY."
+postmsg "$jlogfile" "$msg"
+
+if [ "$KEEPDATA" != "YES" ] ; then
+  cd $DATAROOT
+  rm -rf $DATA
+fi
+
+date
+

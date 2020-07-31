@@ -1,0 +1,19 @@
+###############################################################################
+# This data input card defines the input variables for the script to process 
+# the FSS computation, where the
+#   1st entry: Model Name
+#   2th entry: Verification cycle(s)
+#   3th entry: The model forecast range that is used for the verification
+#   4th entry: Optional: nest domain
+#
+# Note: if you need to add a new model, please add it to the end of this file.
+###############################################################################
+#model|grids|cycles|frange|nests
+#=========================================
+nam|00 12|84|
+gfs|00 12|180|
+conusnest|00 12|60|
+conusarw|00 12|48|
+conusarw2|00 12|48|
+conusnmmb|00 12|48|
+nssl4arw|00 12|36|

@@ -1,0 +1,255 @@
+ecf
+  |_jobs
+     |_script
+       |_ush/verf_g2g_run_href.sh href pc3
+          |_ush/verf_g2g_href.sh $vday href pc3 namnest
+             |_ush/verf_g2g_prepg2g_grib2.sh
+             |_ush/cp_single_Ref_exref.sh namnest 255
+             |_ush/verf_g2g_fitsg2g_grib2.sh 
+                |_$EXECverf_g2g/verf_g2g_grid2grid_grib2 (generates VSDBs)
+
+Input file location:
+  Set in parm/verf_g2g_dev_config:
+  export COMHREF=${COMHREF:-/gpfs/hps/nco/ops/com/hiresw/prod/href}
+  HREF's outpout for verf_href are in 
+    ${COMHREF}.${vday}/verf_g2g
+    (see ush/verf_g2g_get_href.sh)
+
+  ################### Old set up prior to 21 Aug 2017: ###################
+  export COMHREF=${COMHREF:-/gpfs/hps2/ptmp/Matthew.Pyle/com/hiresw/test/href}
+  Pointing to Matt's para in ush/verf_g2g_get_href.sh:    
+    COMHREF=$(get_pdy_dir $vday $cycle)
+
+  Matt's data in /gpfs/hps2/ptmp/Matthew.Pyle/tmpnwprd
+    set in ecf/jverf_grid2grid_href_00.ecf
+  ########################################################################
+
+  Starting on 20170823, Matt's output data for verf_g2g is saved in (e.g.)
+    /gpfs/hps2/ptmp/Matthew.Pyle/com/hiresw/test/href.20170823/verf_g2g
+    (COMHREF in parm/verf_g2g_dev_config points to this directory)
+    we no longer need to go to the working directory (tmpnwprd) to search
+    for them by PDY (Xiaoxue: a production job cannot go to another production
+    job's working directory to look for input.  When there is a prod switch, 
+    working directories would not have been mirrored over.  
+
+Binbin output:     
+  HPSS:/1year/NCEPDEV/emc-meso/Ying.Lin/binbin.verf_g2g_href_00_dev.11831.tar.gz
+  href_20170330.vsdb:
+V01  HREF/8 06 2017033006 CCPA G255 HIST PCP3 SFC     4.76   5.17   7.16   8.24 
+ 10.42  11.57  13.77  15.82  23.09  (Histogram of 8 members?  Add up to 100)
+  
+
+My vsdb, in Binbin's original set up: 
+  /ptmp2/Ying.Lin/href/RFC2/com/verf/dev/vsdb/grid2grid/href_apcp/href_20170525.vsdb
+
+To be resolved:
+------------------------------------------------------------------
+  When compiling verf_g2g_reset.fd, I'm getting a warning message:
+t10a1 $ cd verf_g2g_reset.fd
+t10a1 $ ls
+makefile  re-set-time.f
+t10a1 $ make
+rm -f *.o re-set-time 
+ifort -o re-set-time -O3 -g -convert big_endian -I /nwprod/lib/incmod/g2_4 re-set-time.f -L/nwprod/lib -lip_4 -lw3nco_4 -lw3emc_4  -lbacio_4 -lsp_4 -lg2_4 -ljasper -lpng -lz
+/nwprod/lib/libjasper.a(jas_stream.o): In function `jas_stream_tmpfile':
+/nwprod/lib/sorc/jasper-1.900.1/src/libjasper/base/jas_stream.c:368: warning: the use of `tmpnam' is dangerous, better use `mkstemp'
+mv re-set-time  ../../exec/
+
+Same results when compiling verf_g2g_grid2grid_grib2.fd
+
+Normal - OK. 
+------------------------------------------------------------------
+Job output:
+stty: standard input: Inappropriate ioctl for device
+ModuleCmd_Load.c(208):ERROR:105: Unable to locate a modulefile for 'ruby'
+ModuleCmd_Load.c(208):ERROR:105: Unable to locate a modulefile for 'emc-utils'
+Currently Loaded Modulefiles:
+
+It's OK
+------------------------------------------------------------------
+NCO HREF para location?
+  Is there a current prod /gpfs/hps/nco/ops/com/hiresw/prod/href?  
+  NCO is not running para yet - eval is from Matt's para
+
+  operational: time lagged members would still be in working directory, so
+    Binbin's search by PDY would still be needed.  
+------------------------------------------------------------------
+The directory /ptmpp2/Ying.Lin/href/RFC2/com/verf - 
+  presumably the sub-directories such as dev/href_apcp.20170525 need to be 
+  kept for future cycles.  For how long (3 days) Do they need to be archived in
+  HPSS?  No.  
+
+  Forecast range: out to 36 hours. 
+------------------------------------------------------------------
+Are the vsdb files such as href_20170529.vsdb the only output that need to be
+  saved?  Yes - this is the only 'product' for verf_href. 
+
+Binbin's href_20170330.vsdb: 104 lines, a complete VSDB for the day?
+  PCP3: 3h pcp?
+  HREF/8 HIST (histogram for 8 members?) at 2017033006, for 6/18/24/30h fcsts
+  HREF/8 RELP (relative position: % - closest to observation. not in metviewer yet)  at 2017033006, for 6/18/24/30h fcsts.  
+    
+  HREF/8 RMSE (five numbers are? spread,RMSE,MERR- mean err, ,ABSE absolu. err, PAC (probability anomaly correlation)        at 2017033006, for 6/18/24/30h fcsts  (Originally from Yuejian)
+  HREF/8 RELI (reliability - 18 numbers)           at 2017033006, for 6/18/24/30h fcsts
+  HREF/8 HTFR (Hit rate/false alarm rate - 18 numbers. To generate ROC)           at 2017033006, for 6/18/24/30h fcsts
+  HREF/8 RPS  (Ranked probablility score -  9 numbers, RPSf, RPSc, RPSS, CRPSf, CRPSc, [ c- means climatology - reference) CRPSS [skill score])           at 2017033006, for 6/18/24/30h fcsts
+  HREF/8 BSS  (BSf, BSc, BSS, Reli, Reso, Unc, Unc, Inf, BSl, BSh (lowest/highest)     9 numbers)           at 2017033006, for 6/18/24/30h fcsts
+  HREF/8 ECON (Econonic value 18 numbers)           at 2017033006, for 6/18/24/30h fcsts
+  8x4: 32 lines
+ 
+valid at 2017033012: 6/12/18/24/30/36h forecasts
+  8x6: 48 lines
+
+valid at 2017033018: 6/12/18/30h forecasts
+  8x4: 32 lines
+Total: 104 lines
+
+My vsdb files - 128 lines during 29 May - 3 Jun:
+  
+Max number of vsdbs per day: 8 (score types) x 6 (forecast hours) x 3 (6/12/18Z)
+  = 144.
+
+Each day: verified at 06/12/18Z (no 00Z at this time: model data issue?  
+  Add later?)
+  Some problem (mod? anl?) with getting 00Z.  06/12/18Z for now.
+
+VSDB Line count, 2018/02/02:
+  each day, verified at 00/06/12/18Z.
+    00/12Z cycle runs: all 8 members go out to 36h
+    06/18Z cycle runs: 5 members go out to 36h, 3 members go out to 30h
+    
+
+Forecast hours: 06/12/18/24/30/36
+  
+Run job once a day.  Any time the next day - (need to have CCPA for 18Z $daym1 
+  ready, since we're running it for $daym1).  YL Note: should run for $daym2, 
+  since some RFCs send 6h QPE ending at 18Z after 12Z the next day.  
+
+In parm/verf_g2g_href.pc3: FHO threshold: mm
+  PCP3 1 8 1 0: grib2 ID - don't change them!
+  Ignore P700.
+
+Files in href_apcp.20180130:
+  3-hourly CCPA: 
+    ccpa.t00z.g255.f00
+    ccpa.t06z.g255.f00
+    ccpa.t12z.g255.f00
+    ccpa.t18z.g255.f00
+
+  In ush/verf_g2g_get_href.sh, use copygb2 to get HREF precip to HRAP grid.
+    HREF data in: /gpfs/hps/nco/ops/com/hiresw/prod/href.20180130/verf_g2g
+ 
+-------------------------------------------------------------------------
+  Ensemble members in /gpfs/hps/nco/ops/com/hiresw/prod/href.20180130/verf_g2g:
+    
+  00Z cycles: 3 on-cycle/3 12-hour lagged hiresw runs (1 nmmb, and 2 arw each)
+    href.m03.t00z.conus.f06 
+       -> hiresw.20180130/hiresw.t00z.arw_5km.f06.conus.grib2
+    href.m04.t00z.conus.f06 
+       -> hiresw.20180130/hiresw.t00z.nmmb_5km.f06.conus.grib2
+    href.m05.t00z.conus.f06 
+       -> hiresw.20180130/hiresw.t00z.arw_5km.f06.conusmem2.grib2
+    href.m06.t00z.conus.f06 
+       -> hiresw.20180129/hiresw.t12z.arw_5km.f18.conus.grib2
+    href.m07.t00z.conus.f06 
+       -> hiresw.20180129/hiresw.t12z.nmmb_5km.f18.conus.grib2
+    href.m08.t00z.conus.f06 
+       -> hiresw.20180129/hiresw.t12z.arw_5km.f18.conusmem2.grib2
+
+  06Z cycles: 3 6-hr lagged/3 18-hour lagged hiresw runs
+    href.m03.t06z.conus.f06
+        -> hiresw.20180130/hiresw.t00z.arw_5km.f12.conus.grib2
+    href.m04.t06z.conus.f06 
+        -> hiresw.20180130/hiresw.t00z.nmmb_5km.f12.conus.grib2
+    href.m05.t06z.conus.f06 
+        -> hiresw.20180130/hiresw.t00z.arw_5km.f12.conusmem2.grib2
+    href.m06.t06z.conus.f06 
+        -> hiresw.20180129/hiresw.t12z.arw_5km.f24.conus.grib2
+    href.m07.t06z.conus.f06 
+        -> hiresw.20180129/hiresw.t12z.nmmb_5km.f24.conus.grib2
+    href.m08.t06z.conus.f06 
+        -> hiresw.20180129/hiresw.t12z.arw_5km.f24.conusmem2.grib2
+
+  12Z cycles: 3 on-cycle/3 12-hour lagged hiresw runs (1 nmmb, and 2 arw each)
+    href.m03.t12z.conus.f06 
+        -> hiresw.20180130/hiresw.t12z.arw_5km.f06.conus.grib2
+    href.m04.t12z.conus.f06 
+        -> hiresw.20180130/hiresw.t12z.nmmb_5km.f06.conus.grib2
+    href.m05.t12z.conus.f06 
+        -> hiresw.20180130/hiresw.t12z.arw_5km.f06.conusmem2.grib2
+    href.m06.t12z.conus.f06 
+        -> hiresw.20180130/hiresw.t00z.arw_5km.f18.conus.grib2
+    href.m07.t12z.conus.f06 
+        -> hiresw.20180130/hiresw.t00z.nmmb_5km.f18.conus.grib2
+    href.m08.t12z.conus.f06 
+        -> hiresw.20180130/hiresw.t00z.arw_5km.f18.conusmem2.grib2
+
+  18Z cycles: 3 6-hr lagged/3 18-hour lagged hiresw runs
+    href.m03.t18z.conus.f06 
+        -> hiresw.20180130/hiresw.t12z.arw_5km.f12.conus.grib2
+    href.m04.t18z.conus.f06 
+        -> hiresw.20180130/hiresw.t12z.nmmb_5km.f12.conus.grib2
+    href.m05.t18z.conus.f06 
+        -> hiresw.20180130/hiresw.t12z.arw_5km.f12.conusmem2.grib2
+    href.m06.t18z.conus.f06 
+        -> hiresw.20180130/hiresw.t00z.arw_5km.f24.conus.grib2
+    href.m07.t18z.conus.f06  
+        -> hiresw.20180130/hiresw.t00z.nmmb_5km.f24.conus.grib2
+    href.m08.t18z.conus.f06 
+        -> hiresw.20180130/hiresw.t00z.arw_5km.f24.conusmem2.grib2
+
+  ConUS ARW/ARW2/NMMB runs are 00Z/12Z cycles only, out to 48h, so 
+    href members 06-08 for 06/18Z cycles are out to 30h only (18h lag)
+
+
+    prcip.m*.t*z.conus.f* files: contains hourly/3hr/6hr APCP and WEASD
+      fields.  
+
+    href.20180130/verf_g2g: contains 372 each of the href.m*conus.f* files 
+      and prcip.m*.conus.f* files.
+
+    File counts:
+      00/12Z cycles: 2*8*(36/3)=192
+      06/12Z cycles: 2*(5*(36/3)+3*(30/3))=190
+   
+  what are href.m01 and href.m02?  Matt: they are NAM ConUS nest, mapped from
+    3km grid to 5km grid.  on-cycle (m01) and with 6h time lag (m02).
+  
+  prcip.m${mbr}.t${cyc}z.conus.${fhr} appears to contain the hourly/3hr/6hr
+    APCP and WEASD fields for href.m${mbr}.t${cyc}z.conus.${fhr}
+    (checked prcip.m01.t00z.conus.f06 against href.m01.t00z.conus.f06)
+    Do you plan to keep the prcip files around?  (can probably save some 
+    processing time by using these, rather than the big href.* files)
+
+  The above is not quite true.  In 
+    /gpfs/hps/nco/ops/com/hiresw/prod/href.20180129/verf_g2g:
+    $ wgrib2 href.m05.t18z.conus.f36 | grep APCP
+    29:20361882:d=2018012912:APCP:surface:0-42 hour acc fcst:
+    31:21388274:d=2018012912:APCP:surface:41-42 hour acc fcst:
+    33:22004554:d=2018012912:APCP:surface:39-42 hour acc fcst:
+
+    $ wgrib2 prcip.m05.t18z.conus.f36 | grep APCP
+    1:0:d=2018012912:APCP:surface:41-42 hour acc fcst:
+    3:616280:d=2018012912:APCP:surface:39-42 hour acc fcst:
+    5:1313681:d=2018012912:APCP:surface:36-42 hour acc fcst:
+    7:2087398:d=2018012912:APCP:surface:30-42 hour acc fcst:
+    9:2957193:d=2018012912:APCP:surface:18-42 hour acc fcst:
+
+    They don't quite overhap - 39-42h acc fcst is the only one the two has
+      in common.  
+
+-------------------------------------------------------------------------
+verf_g2g_grid2grid_grib2.fd < g2g.ctl.ensemble > output.ensemble
+
+grid2grid
+  |_
+
+
+-------------------------------------------------------------------------
+Debug: to run only the 00Z cycle, go to ush/verf_g2g_href.sh, and change
+  END=18
+to
+  END=00
+
+
+

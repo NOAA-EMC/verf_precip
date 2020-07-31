@@ -1,0 +1,107 @@
+####################################################################################################
+# This data input card defines the input variables for the script to extract the model
+# precip data, where the
+#   1st entry: Model Name
+#   2nd entry: "convert" if it is necessary to do a conversion from the model input grid to another
+#   3rd entry: The prodmeter number (GRIB1) or prodmeter name (GRIB2) if the
+#              original input file.  For example, the original ECMWF prodmeter
+#              number is '228' (total precip with the unit of 'm').  For GFS
+#              (GRIB2) it is precip rate, 'PRATE'.  
+#   4t  entry: Grid number of the precipitation field. If the output contains 
+#              only precipitation fields in one single grid(e.g. NAM), 
+#              you can use '000' 
+#   5th entry: The model output file format including the path name
+#   6th entry: The prefix for output grid files that contain the extracted 
+#              precip data
+#   7th entry: The model cyles that are used for the precip data extract
+#   8th entry: The starting model forecast hour for the precip data extract
+#   9th entry: The ending model forecast hour for the precip data extract
+#  10th entry: The hour interval for the precip data to be extracted
+#  11th entry: Used only when 12th entry 'grb2' is provided.  
+#              Desired accumulation length, or special flags 
+#              (888 or 999, defined below).  For example, HRRR has both
+#              a 1-hr bucket and an never-emptying bucket (denoted by '999') 
+#              here.  When getppt encounters lbucket=999, for forecast hours
+#              of 3/6/9/12/15, it'll get precip for 00-03h, 00-06h, ...,00-15h,
+#              and skip the 02-03h,.., 05-06h,  ... 14-15h records.
+#              If the model has a bucket length the same as the 10th entry
+#              in this parm file (the hour interval for the precip data
+#              extract, then the 11th entry should have the same value as the 
+#              10th.  For example, for conusnestx (Mar 2015, GRIB2 only), 
+#              the value for both the 10th and the 11th is '03'.
+#         model_yyyymmddhh_fhr1_fhr2
+#
+#         lbucket=888: bucket is emptied less often than we'd like.
+#           for example, NAM 00/12Z cycles have a 12h bucket, so we need to
+#           extract precip output for, say, namx_2015060212_060_063, *_060_066,
+#           *_060_069, *_060_072, etc..  In getppt, we'd leave fhr1 undefined
+#           prior to extracting precip using wgrib2.  
+#
+#         lbucket=999: bucket is never emptied (in getppt, fhr1=000)
+#
+#  12th entry (optional): 'grb2' if the input file is in GRIB2.  
+#
+# Note: if you need to add a new model, please add it to the end of this file.
+#####################################################################################################
+# model|convert|cgd|grd|input file          |output file prefix          |  cycles | shour | ehour | interval |
+#======================================================================================================================
+gec00|convert  |059|000|/gpfs/dell2/nco/ops/com/gens/prod/gefs._DAY_/%{cyc}%/sflux/gec00.t%{cyc}%z.sfluxgrbf%{fhr}%|_DAY_/gec00_|00 06 12 18|06|84|06|
+gfs3h|      |   |000|/gpfs/dell1/nco/ops/com/gfs/prod/gfs._DAY_/%{cyc}%/gfs.t%{cyc}%z.pgrb2.0p25.f%{fhr}%|_DAY_/gfs_|00 06 12 18|03|180|03|03|grb2
+gfs6h|      |   |000|/gpfs/dell1/nco/ops/com/gfs/prod/gfs._DAY_/%{cyc}%/gfs.t%{cyc}%z.pgrb2.0p25.f%{fhr}%|_DAY_/gfs_|00 06 12 18|03|180|03|06|grb2
+wgnegfs|      |   |000|/gpfs/dell1/nco/ops/com/gfs/prod/gfs._DAY_/%{cyc}%/gfs.t%{cyc}%z.pgrb2.0p25.f%{fhr}%|_DAY_/wgnegfs_|00 06 12 18|03|180|03|999|grb2
+nam|          |   |000|/gpfs/dell1/nco/ops/com/nam/prod/nam._DAY_/nam.t%{cyc}%z.bgrdsf%{fhr}%.tm00|_DAY_/nam_|00 06 12 18|03|84|03|888|grb2
+conusnest|     |   |000|/gpfs/dell1/nco/ops/com/nam/prod/nam._DAY_/nam.t%{cyc}%z.conusnest.hiresf%{fhr}%.tm00.grib2|_DAY_/conusnest_|00 06 12 18|03|60|03|03|grb2
+conusarw|      |   |000|/gpfs/hps/nco/ops/com/hiresw/prod/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.conus.grib2|_DAY_/conusarw_|00 12|03|48|03|03|grb2
+conusarw2|      |   |000|/gpfs/hps/nco/ops/com/hiresw/prod/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.conusmem2.grib2|_DAY_/conusarw2_|00 12|03|48|03|03|grb2
+conusnmmb|     |   |000|/gpfs/hps/nco/ops/com/hiresw/prod/hiresw._DAY_/hiresw.t%{cyc}%z.nmmb_5km.f%{fhr}%.conus.grib2|_DAY_/conusnmmb_|00 12|03|48|03|03|grb2
+akarw|      |   |000|/gpfs/hps/nco/ops/com/hiresw/prod/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.ak.grib2|_DAY_/akarw_|06 18|03|48|03|03|grb2
+akarw2|      |   |000|/gpfs/hps/nco/ops/com/hiresw/prod/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.akmem2.grib2|_DAY_/akarw2_|06 18|03|48|03|03|grb2
+aknmmb|      |   |000|/gpfs/hps/nco/ops/com/hiresw/prod/hiresw._DAY_/hiresw.t%{cyc}%z.nmmb_5km.f%{fhr}%.ak.grib2|_DAY_/aknmmb_|06 18|03|48|03|03|grb2
+hiarw|      |   |000|/gpfs/hps/nco/ops/com/hiresw/prod/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.hi.grib2|_DAY_/hiarw_|00 12|03|48|03|03|grb2
+hiarw2|      |   |000|/gpfs/hps/nco/ops/com/hiresw/prod/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.himem2.grib2|_DAY_/hiarw2_|00 12|03|48|03|03|grb2
+hinmmb|      |   |000|/gpfs/hps/nco/ops/com/hiresw/prod/hiresw._DAY_/hiresw.t%{cyc}%z.nmmb_5km.f%{fhr}%.hi.grib2|_DAY_/hinmmb_|00 12|03|48|03|03|grb2
+prarw|      |   |000|/gpfs/hps/nco/ops/com/hiresw/prod/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.pr.grib2|_DAY_/prarw_|06 18|03|48|03|03|grb2
+prarw2|      |   |000|/gpfs/hps/nco/ops/com/hiresw/prod/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.prmem2.grib2|_DAY_/prarw2_|06 18|03|48|03|03|grb2
+prnmmb|      |   |000|/gpfs/hps/nco/ops/com/hiresw/prod/hiresw._DAY_/hiresw.t%{cyc}%z.nmmb_5km.f%{fhr}%.pr.grib2|_DAY_/prnmmb_|06 18|03|48|03|03|grb2
+ecmwf|convert  |228|000|import/UWD._DAYm1_12.%{fhr}%|_DAYm1_/ecmwf_|12|24|72|24|
+jma|convert    |   |000|/gpfs/dell1/nco/ops/dcom/prod/_DAY_/qpf_verif/jma__DAY_%{cyc}%00.grib|_DAY_/jma_|00 12|06|84|06|
+metfr|   |   |000|/gpfs/dell1/nco/ops/dcom/prod/_DAYm1_/qpf_verif/METFRA_%{cyc}%__DAYm1_|_DAYm1_/metfr_|00 12|12|84|12|
+ukmo|convert |255|000|import/ukmo._DAY_%{cyc}%.grb1|_DAY_/ukmo_|00 12|12|96|12|
+rap|   |   |000|/gpfs/hps/nco/ops/com/rap/prod/rap._DAY_/rap.t%{cyc}%z.awip32f%{fhr}%.grib2|_DAY_/rap_|03 09 15 21|01|39|01|01|grb2
+rap|   |   |000|/gpfs/hps/nco/ops/com/rap/prod/rap._DAY_/rap.t%{cyc}%z.awip32f%{fhr}%.grib2|_DAY_/rap_|00 06 12 18|01|21|01|01|grb2
+hrrr|   |   |000|/gpfs/hps/nco/ops/com/hrrr/prod/hrrr._DAY_/conus/hrrr.t%{cyc}%z.wrfprsf%{fhr}%.grib2|_DAY_/hrrr_|00 06 12 18|01|36|01|01|grb2
+hrrrak|  |  |000|/gpfs/hps/nco/ops/com/hrrr/prod/hrrr._DAY_/alaska/hrrr.t%{cyc}%z.wrfprsf%{fhr}%.ak.grib2|_DAY_/hrrrak_|03 09 15 21|01|18|01|01|grb2
+hrrrak|  |  |000|/gpfs/hps/nco/ops/com/hrrr/prod/hrrr._DAY_/alaska/hrrr.t%{cyc}%z.wrfprsf%{fhr}%.ak.grib2|_DAY_/hrrrak_|00 06 12 18|01|36|01|01|grb2
+aknest|     |   |000|/gpfs/dell1/nco/ops/com/nam/prod/nam._DAY_/nam.t%{cyc}%z.alaskanest.hiresf%{fhr}%.tm00.grib2|_DAY_/aknest_|00 06 12 18|03|60|03|03|grb2
+hinest|     |   |000|/gpfs/dell1/nco/ops/com/nam/prod/nam._DAY_/nam.t%{cyc}%z.hawaiinest.hiresf%{fhr}%.tm00.grib2|_DAY_/hinest_|00 06 12 18|03|60|03|03|grb2
+prnest|     |   |000|/gpfs/dell1/nco/ops/com/nam/prod/nam._DAY_/nam.t%{cyc}%z.priconest.hiresf%{fhr}%.tm00.grib2|_DAY_/prnest_|00 06 12 18|03|60|03|03|grb2
+srarwctl|      |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.ctl.f%{fhr}%.grib2|_DAYm1_/srarwctl_|03 09 15 21|03|87|03|03|grb2
+srarwn1|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n1.f%{fhr}%.grib2|_DAYm1_/srarwn1_|03 09 15 21|03|87|03|03|grb2
+srarwn2|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n2.f%{fhr}%.grib2|_DAYm1_/srarwn2_|03 09 15 21|03|87|03|03|grb2
+srarwn3|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n3.f%{fhr}%.grib2|_DAYm1_/srarwn3_|03 09 15 21|03|87|03|03|grb2
+srarwn4|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n1.f%{fhr}%.grib2|_DAYm1_/srarwn4_|03 09 15 21|03|87|03|03|grb2
+srarwn5|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n2.f%{fhr}%.grib2|_DAYm1_/srarwn5_|03 09 15 21|03|87|03|03|grb2
+srarwn6|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n3.f%{fhr}%.grib2|_DAYm1_/srarwn6_|03 09 15 21|03|87|03|03|grb2
+srarwp1|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p1.f%{fhr}%.grib2|_DAYm1_/srarwp1_|03 09 15 21|03|87|03|03|grb2
+srarwp2|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p2.f%{fhr}%.grib2|_DAYm1_/srarwp2_|03 09 15 21|03|87|03|03|grb2
+srarwp3|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p2.f%{fhr}%.grib2|_DAYm1_/srarwp3_|03 09 15 21|03|87|03|03|grb2
+srarwp4|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p1.f%{fhr}%.grib2|_DAYm1_/srarwp4_|03 09 15 21|03|87|03|03|grb2
+srarwp5|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p2.f%{fhr}%.grib2|_DAYm1_/srarwp5_|03 09 15 21|03|87|03|03|grb2
+srarwp6|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p2.f%{fhr}%.grib2|_DAYm1_/srarwp6_|03 09 15 21|03|87|03|03|grb2
+srnmbctl|      |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.ctl.f%{fhr}%.grib2|_DAYm1_/srnmbctl_|03 09 15 21|03|87|03|03|grb2
+srnmbn1|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n1.f%{fhr}%.grib2|_DAYm1_/srnmbn1_|03 09 15 21|03|87|03|03|grb2
+srnmbn2|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n2.f%{fhr}%.grib2|_DAYm1_/srnmbn2_|03 09 15 21|03|87|03|03|grb2
+srnmbn3|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n2.f%{fhr}%.grib2|_DAYm1_/srnmbn3_|03 09 15 21|03|87|03|03|grb2
+srnmbn4|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n1.f%{fhr}%.grib2|_DAYm1_/srnmbn4_|03 09 15 21|03|87|03|03|grb2
+srnmbn5|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n2.f%{fhr}%.grib2|_DAYm1_/srnmbn5_|03 09 15 21|03|87|03|03|grb2
+srnmbn6|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n2.f%{fhr}%.grib2|_DAYm1_/srnmbn6_|03 09 15 21|03|87|03|03|grb2
+srnmbp1|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p1.f%{fhr}%.grib2|_DAYm1_/srnmbp1_|03 09 15 21|03|87|03|03|grb2
+srnmbp2|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p2.f%{fhr}%.grib2|_DAYm1_/srnmbp2_|03 09 15 21|03|87|03|03|grb2
+srnmbp3|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p2.f%{fhr}%.grib2|_DAYm1_/srnmbp3_|03 09 15 21|03|87|03|03|grb2
+srnmbp4|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p1.f%{fhr}%.grib2|_DAYm1_/srnmbp4_|03 09 15 21|03|87|03|03|grb2
+srnmbp5|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p2.f%{fhr}%.grib2|_DAYm1_/srnmbp5_|03 09 15 21|03|87|03|03|grb2
+srnmbp6|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p2.f%{fhr}%.grib2|_DAYm1_/srnmbp6_|03 09 15 21|03|87|03|03|grb2
+srmean|      |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/ensprod/sref.t%{cyc}%z.pgrb212.mean_fvs.f%{fhr}%|_DAYm1_/srmean_|03 09 15 21|03|87|03|
+srfreqm|       |   |000|/gpfs/dell2/nco/ops/com/sref/prod/sref._DAYm1_/%{cyc}%/ensprod_biasc/meanprecip.sref.f%{fhr}%|_DAYm1_/srfreqm_|03 09 15 21|03|87|03|
+firewx|       |   |000|/gpfs/dell1/nco/ops/com/nam/prod/nam._DAY_/nam.t%{cyc}%z.firewxnest.hiresf%{fhr}%.tm00.grib2|_DAY_/firewx_|00 06 12 18|01|36|01|01|grb2
+nssl4arw|       |   |000|/gpfs/dell1/nco/ops/dcom/prod/_DAY_/wgrbbul/nssl_wrf/wrf4nssl__DAY_%{cyc}%.f%{fhr}%|_DAY_/nssl4arw_|00 12|03|36|03|

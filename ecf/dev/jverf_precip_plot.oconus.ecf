@@ -1,0 +1,81 @@
+#!/bin/ksh
+#BSUB -J jverf_precip_plot
+#BSUB -oo /ptmpp1/Ying.Lin/cron.out/verfplot.oconus.%J
+#BSUB -eo /ptmpp1/Ying.Lin/cron.out/verfplot.oconus.%J
+#BSUB -cwd /stmpp1/Ying.Lin
+#BSUB -n 1
+#BSUB -q "dev"
+#BSUB -W 1:39
+#BSUB -P VERF-T2O
+
+set -x
+export envir=dev
+export cyc=00
+export RUN_ENVIR=dev
+export retro=N
+export debug=N
+export domain=oconus
+export job=verf_precip_plot_$domain
+
+# This script has three optional arguments if run interactively.  WCOSS LSF 
+# (bsub) does not accept arguments in the LSF script, in that case, set up
+# up as environmental variables.  To make this thing more flexible, arg 2 
+# and/or 3 can be either 'debug' or 'retro'.  
+#   var 1:   vday=yyyymmdd (if var 1 not set, $daym1 is used in J-job)
+#   var 2/3: retro (default: no retro)
+#   var 3/2: debug (default: no debug.  In debug mode, do not delete the 
+#            working directory)
+# If this script is run with no arguments, it is assumed that it is
+# bsub'd by the cron job (cronmode=Y).  In that case, when the getppt step is
+# done, in the dev mode, jobs/JVERF_PRECIP_VERFGEN_24H will bsub 
+# ecf/jverf_precip_plot.ecf.   When this job is run with at least one argument,
+# we'll only be running the VERFGEN24 itself.  
+export cronmode=Y
+
+if [ $# -ge 1 ]; then
+  export vday=$1
+  export cronmode=N
+fi
+
+if [ $# -ge 2 ]; then
+  if [ $2 = retro ]; then
+    retro=Y
+  elif [ $2 = debug ]; then
+    debug=Y
+  fi
+fi
+
+if [ $# -ge 3 ]; then
+  if [ $3 = retro ]; then
+    retro=Y
+  elif [ $3 = debug ]; then
+    debug=Y
+  fi
+fi
+
+if [ "$RUN_ENVIR" = dev ]; then        ### for dev 
+  # run .profile so that 
+  #   1. the script can find the 'postmsg','startmsg' etc. in the current dir
+  #   2. module ics is loaded to allow us to run copygb in cron jobs
+  . /u/$LOGNAME/.profile
+# ------------------------------------------------------
+# Most frequently made changes: 
+  export HOMEverf_precip=$ZROOT/pcpverif/nextjif
+  export PARMverf_precip=$HOMEverf_precip/parm.dev.wcoss
+  export DATAverf_precip=/ptmpp1/$LOGNAME/verf.dat
+  # Location of the 45-day rotating archive:
+  export ARCH45DAY=/meso/save/Ying.Lin/hold45days
+  # Location of the EZDM directory:
+  export RZDMDIR=/home/www/emc/htdocs/mmb/ylin/pcpverif/daily
+  # Use prod data for plot?  (not actually used for OCONUS)
+# ------------------------------------------------------
+  export COMROOT=/com               # needed for setpdy,e g. /com/date/t20z
+  # DATAROOT is NCO-speak for 'wrkdir'.
+  export DATAROOT=/stmpp1/$LOGNAME/tmpnwprd
+  # export vday=20140602
+else                                   ### for prod/para/test
+  export HOMEverf_precip=/nw${envir}/pcpverif.v3.4.0
+fi # end of 'is this dev?' 
+
+$HOMEverf_precip/jobs/JVERF_PRECIP_PLOTPCP
+

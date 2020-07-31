@@ -1,0 +1,34 @@
+#!/bin/bash
+#BSUB -J jverf_grid2grid_href_00
+#BSUB -o /gpfs/dell2/ptmp/Ying.Lin/cron.out/verf_g2g_href.%J
+#BSUB -e /gpfs/dell2/ptmp/Ying.Lin/cron.out/verf_g2g_href.%J
+#BSUB -n 1
+#BSUB -q "dev"
+#BSUB -W 01:45
+#BSUB -R "span[ptile=1]" -R "rusage[mem=2000]"  -R "affinity[core]"
+#BSUB -P VERF-T2O
+
+set -x
+module purge
+module load ips/18.0.5.274    # for prod_util
+module load prod_util/1.1.3
+module load prod_envir/1.0.3
+module load grib_util/1.1.1
+
+export envir=dev
+export RUN_ENVIR=dev
+export cyc=00
+export job=jverf_grid2grid_href_apcp
+
+# CALL executable job script here
+export version=v4.3.2
+#export vday=20191220
+export NOSCRUB=/gpfs/dell2/emc/verification/noscrub/Ying.Lin
+export HOMEverf_href=$NOSCRUB/verf_precip.${version}
+export COM_IN=/gpfs/dell2/ptmp/$LOGNAME/verf.dat.${version}
+export COM_OUT=${COM_IN}
+export COMVSDB=${COM_OUT}/vsdb
+export DATA_IN=/gpfs/dell2/ptmp/$LOGNAME/verf_href/tmpnwprd
+
+$HOMEverf_href/jobs/JVERF_GRID2GRID_HREF
+

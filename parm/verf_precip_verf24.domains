@@ -1,0 +1,64 @@
+####################################################################################################
+# This data input card defines the input variables for the script to process the 24-hourly model 
+# verification, where the
+#   1st entry: Model Name
+#   2nd entry: Verification length (24h)
+#   3rd entry: Verification grid(s)
+#   4th entry: Verification cycles
+#   5th entry: Precipitation bucket length
+#   6th entry: The model forecast range that is used for the verification
+#   7th entry: Nests
+#
+# Note: if you need to add a new model, please add it to the end of this file.
+#####################################################################################################
+#model|vlen|grids|cycles|blen|frange|nests
+#=========================================
+gec00|24|211 212 218|00 06 12 18|6|84|
+gfs|24|211 212 218|00 06 12 18|6|180|
+nam|24|211 212 218|00 12|12|84|
+nam|24|211 212 218|06 18|3|84|
+ndas|24|211 212 218|12|1|24|
+ndassoil|24|211 212 218|12|1|24|
+conusnest|24|218|00 06 12 18|03|60
+conusnmmb|24|218|00 12|3|48|
+conusarw|24|218|00 12|3|48|
+conusarw2|24|218|00 12|3|48|
+cmc|24|211 212|00 12|24|48|
+cmcglb|24|211 212|00 12|24|84|
+dwd|24|211 212|00 12|24|72|
+ecmwf|24|211 212|12|24|72|
+jma|24|211 212|00 12|06|84|
+metfr|24|211 212|00 12|24|84|
+ukmo|24|211 212|00 12|12|96|
+rap|24|218|03 09 15 21|01|39
+hrrr|24|218|00 06 12|01|36
+srarwctl|24|212|03 09 15 21|03|87
+srarwn1|24|212|03 09 15 21|03|87
+srarwn2|24|212|03 09 15 21|03|87
+srarwn3|24|212|03 09 15 21|03|87
+srarwn4|24|212|03 09 15 21|03|87
+srarwn5|24|212|03 09 15 21|03|87
+srarwn6|24|212|03 09 15 21|03|87
+srarwp1|24|212|03 09 15 21|03|87
+srarwp2|24|212|03 09 15 21|03|87
+srarwp3|24|212|03 09 15 21|03|87
+srarwp4|24|212|03 09 15 21|03|87
+srarwp5|24|212|03 09 15 21|03|87
+srarwp6|24|212|03 09 15 21|03|87
+srnmbctl|24|212|03 09 15 21|03|87
+srnmbn1|24|212|03 09 15 21|03|87
+srnmbn2|24|212|03 09 15 21|03|87
+srnmbn3|24|212|03 09 15 21|03|87
+srnmbn4|24|212|03 09 15 21|03|87
+srnmbn5|24|212|03 09 15 21|03|87
+srnmbn6|24|212|03 09 15 21|03|87
+srnmbp1|24|212|03 09 15 21|03|87
+srnmbp2|24|212|03 09 15 21|03|87
+srnmbp3|24|212|03 09 15 21|03|87
+srnmbp4|24|212|03 09 15 21|03|87
+srnmbp5|24|212|03 09 15 21|03|87
+srnmbp6|24|212|03 09 15 21|03|87
+srmean|24|212|03 09 15 21|03|87
+srfreqm|24|212|03 09 15 21|03|87
+firewxcs|24|218|00 06 12 18|01|36
+nssl4arw|24|218|00 12|36|36

@@ -1,0 +1,36 @@
+####################################################################################################
+# This data input card defines the input variables for the script to plot the 24h precip verification
+# against the analysis
+#   1st entry: Model Name
+#   2nd entry: Hourlist
+#   3rd entry: Grid
+#
+# Mar 2018: removed UKMO from plot - use python by dev
+#   ukmo|24 36 48 60 96|212|
+#
+# Note: if you need to add a new model, please add it to the end of this file.
+#####################################################################################################
+#MODEL  |HOURLIST  |GRID|
+#=========================================
+cmc|24 36 48|212|
+cmcglb|24 36 48 60 72 84|212|
+dwd|24 36 48 60 72|212|
+ecmwf|24 48 72|212|
+jma|24 36 48 60 72 84|212|
+metfr|24 36 48 60 72 84|212|
+medley|24 48|212|
+gec00|12 24 36 48 60 72 84|212|
+gfs|24 30 36 42 48 54 60 66 72 78 84 90 102 108 114 120 126 132 138 144 150 156 162 168 174 180|218|
+nam|24 30 36 42 48 54 60 66 72 78 84|218|
+ndas|24|218|
+ndassoil|24|218|
+conusnest|24 30 36 42 48 54 60|218|
+conusnmmb|24 36 48|218|
+conusarw|24 36 48|218|
+conusarw2|24 36 48|218|
+rap|27 33 39|218|
+hrrr|24 30 36|218|
+srmean|27 33 39 45 51 57 63 69 75 81 87|212|
+srfreqm|27 33 39 45 51 57 63 69 75 81 87|212|
+firewxcs|24 30 36|218|
+nssl4arw|24 36|218|

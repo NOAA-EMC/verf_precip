@@ -1,0 +1,119 @@
+#!/bin/sh
+set -x
+module purge
+module use ../modulefiles
+module load VERF_PRECIP
+
+module list
+
+sleep 1
+
+BASE=`pwd`
+
+if [ -d $BASE/../exec ]; then
+  rm -f $BASE/../exec/*
+else
+  mkdir $BASE/../exec
+fi
+
+
+##############################
+
+cd ${BASE}/nam_cmorph2grb.fd
+make clean
+make
+make mvexec
+make clean
+
+##############################
+
+cd ${BASE}/nam_stage4_acc.fd
+make clean
+make
+make mvexec
+make clean
+
+##############################
+
+cd ${BASE}/verf_precip_addgrdcnv.fd
+make clean
+make
+make mvexec
+make clean
+
+##############################
+
+cd ${BASE}/verf_precip_average.fd
+make clean
+make
+make mvexec
+make clean
+
+##############################
+
+cd ${BASE}/verf_precip_brkout_fcst.fd
+make clean
+make
+make mvexec
+make clean
+
+##############################
+
+cd ${BASE}/verf_precip_brkout_ndas.fd
+make clean
+make
+make mvexec
+make clean
+
+##############################
+
+cd ${BASE}/verf_precip_diffpcp.fd
+make clean
+make
+make mvexec
+make clean
+
+##############################
+
+cd ${BASE}/verf_precip_fss.fd
+make clean
+make
+make mvexec
+make clean
+
+##############################
+
+cd ${BASE}/verf_precip_pcpconform.fd
+make clean
+make
+make mvexec
+make clean
+
+##############################
+
+cd ${BASE}/verf_precip_verfgen.fd
+make clean
+make
+make mvexec
+make clean
+
+##############################
+
+cd ${BASE}/verf_g2g_grid2grid_grib2.fd
+make clean
+make
+make mvexec
+make clean
+
+##############################
+
+cd ${BASE}/verf_g2g_reset.fd
+make clean
+make
+make mvexec
+make clean
+
+##############################
+
+
+

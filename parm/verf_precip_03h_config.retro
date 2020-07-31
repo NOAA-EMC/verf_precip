@@ -1,0 +1,8 @@
+export run_gfs=0
+export run_nam=0
+export run_conusnest=1
+export run_conusnmmb=0
+export run_conusarw=0
+export run_conusarw2=0
+export run_rap=0
+export run_hrrr=0

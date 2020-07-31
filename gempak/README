@@ -1,0 +1,11 @@
+2019/12/13: 
+  tables/colors/coltbl.xwp.wbg: need to make gempak plots on a white background.
+    This file is copied over from wcoss phase1 /nwprod/gempak/fix/.  This file
+    is not found on 
+    /gpfs/dell1/nco/ops/nwprod/gempak.v7.3.1/nawips/gempak/tables/colors/.
+  tables/grid/wmogrib1.tbl: need to distinguish between "zero precip" and 
+    "no data" areas.  This file was copied over from 
+    /gpfs/dell1/nco/ops/nwprod/gempak.v7.3.1/nawips/gempak/tables/grid/, 
+    and "MISSING" column for "061 Total precipitation" was changed from 
+    '-0.01' to '-9999.00'.
+

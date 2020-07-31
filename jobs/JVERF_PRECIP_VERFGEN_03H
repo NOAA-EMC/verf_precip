@@ -1,0 +1,184 @@
+#!/bin/ksh
+set -x
+
+#################################################################
+# 9/20/2009, Julia Zhu   Scripts are modified to be sharable
+#                        between EMC and NCO
+#         Please note that variable "RUN_ENVIR" is set and used
+#         in the development enviroment only.
+#################################################################
+
+# ###################################
+# SET SHELL PROCESSING VARIABLES
+# ###################################
+export PS4='$SECONDS + ' 
+date
+
+export machine=${machine:-wcoss}
+export RUN_ENVIR=${RUN_ENVIR:-nco}
+export SENDECF=${SENDECF:-YES}
+
+#----------------  Notes for dev -----------------------------
+# verf_precip_config contains exports such as
+#
+#   export HOMEverf_precip=/nw{envir} (for prod; dev defines this in ecf script)
+#   export EXECverf_precip=$HOMEverf_precip/exec
+#   export PARMverf_precip=$HOMEverf_precip/parm
+#              ...
+#   export SENDCOM= ...
+#   export SENDECF= ...
+#   export SENDDBN= ...
+#   export SENDRZDM= ... 
+#     ... 
+# Machine is wcoss by default, unless the calling script or user's 
+# .cshrc/.profile has machine set to zeus.
+# --------------------------------------------------------------------
+
+if [ "$RUN_ENVIR" = dev ]    ### For Developers
+then
+  # PARMverf_precip is set in the ecf/sms script.  It is either 'parm' or
+  # parm.dev.$machine, under $HOMEverf_precip.  
+  . $PARMverf_precip/verf_precip_config
+  export DATAROOT=${DATAROOT:-/tmpnwprd2}
+  export jlogfile=${jlogfile:-$DATAROOT/jlogfile}
+  export SENDDBN=NO
+  if [ $debug = N ]; then
+    KEEPDATA=NO
+  else
+    KEEPDATA=YES
+  fi
+fi
+
+###############################################################
+# This block can be modified for different Production test
+# environment. This is used for operational testings
+###############################################################
+if [ $RUN_ENVIR = "nco" -a $envir != "prod" ]   ### For Operations
+then
+   export SENDDBN=${SENDDBN:-YES}
+   export DBNLOG=${DBNLOG:-YES}
+fi
+
+###########################################################
+# obtain unique process id (pid) and make temp directories
+###########################################################
+export pid=$$
+export DATA=$DATAROOT/${job}.${pid}
+mkdir -p $DATA
+cd $DATA 
+
+####################################
+# File To Log Msgs
+####################################
+export jlogfile=${jlogfile:-${DATA}/jlogfile}
+
+####################################
+# Determine Job Output Name on System
+####################################
+export outid="LL$job"
+export jobid="${outid}.o${pid}"
+export pgmout="OUTPUT.${pid}"
+export cycle=t${cyc}z 
+
+###############################
+# Specify NET and RUN name
+###############################
+export NET=verf
+export RUN=precip
+
+################################################################
+# SENDCOM=YES--Copy output file to /com
+# SENDECF=YES--Allow to talk back to ECF
+# SENDDBN=YES--Alert output file to TOC, set to NO for testing
+################################################################
+export SENDCOM=${SENDCOM:-YES}
+export SENDDBN=${SENDDBN:-YES}       # need to set to NO for testing only
+export SENDECF=${SENDECF:-YES}
+export SENDRZDM=${SENDRZDM:-NO}      # for daily side-by-side plots
+
+################################################################
+# Specify Execution Areas
+# Non-dev uses the follwing block instead of parm/verf_precip_config
+################################################################
+export HOMEverf_precip=${HOMEverf_precip:-${NWROOT}/verf_precip.${verf_precip_ver}}
+export EXECverf_precip=${EXECverf_precip:-$HOMEverf_precip/exec}
+export PARMverf_precip=${PARMverf_precip:-$HOMEverf_precip/parm}
+export USHverf_precip=${USHverf_precip:-$HOMEverf_precip/ush}
+export FIXverf_precip=${FIXverf_precip:-$HOMEverf_precip/fix}
+
+###################################
+# Set up the UTILITIES
+###################################
+
+# If the calling script specifies a $vday value, then PDY=$vday+2.
+if [ "$vday" != "" ]; then
+  export PDY=`date -d "$vday + 2 day" +%Y%m%d`
+fi
+
+# /com/date is maintained by NCO on the CCS and WCOSS, but it does not exist 
+#   on Theia.  Do not use setpdy on Theia.  
+if [ $machine = theia ]; then 
+  PDYm2=`date +%Y%m%d -d "2 days ago"`
+else
+  # Run setpdy and initialize PDY variables
+  setpdy.sh
+  . PDY
+fi
+
+export vday=${vday:-$PDYm2}
+
+#################################################
+# Set up the INPUT and OUTPUT directories
+#################################################
+export COMIN=${COMIN:-$COMROOT/verf/${envir}/precip}
+# In dev mode, some model precip files might come from prod side of $COMIN
+# (specified in parm file with 'altcomin', in which case, the scripts will
+# look for input file in the alternative directory '$COMIN2'.  If altcomin
+# is null, then COMIN=$COMIN1.  This is set in the dev parm/verf_precip_config.
+# Since prod side does not use that parm file, we need to pre-specify
+# that COMIN1=$COMIN.  
+export COMIN1=$COMIN
+export DCOM=${DCOM:-$DCOMROOT/prod}
+export COMINpcpanl=${COMINpcpanl:-$(compath.py pcpanl/prod)}
+# COMCCPA is a prefix, not directory name.  Directory is
+#   $(compath.py ccpa/prod)/ccpa.yyyymmdd
+export COMCCPA=${COMCCPA:-$(compath.py ccpa/prod)/ccpa}
+
+export COMOUT=${COMOUT:-$COMROOT/verf/${envir}/precip}
+export COMVSDB=${COMVSDB:-$COMROOT/verf/${envir}/vsdb/precip}
+
+if [ ! -d $COMVSDB ]; then
+  mkdir -p -m 775 $COMVSDB
+fi
+
+if [ ! -d $COMOUT ]; then
+  mkdir -p -m 775 $COMOUT
+fi
+
+env
+
+echo Actual output starts here
+
+################################################
+# Run the config file to set up model variables
+################################################
+if [ $retro = Y ]; then
+  . $PARMverf_precip/verf_precip_${vhour}_config.retro
+else
+  . $PARMverf_precip/verf_precip_${vhour}_config
+fi
+
+#######################################################################
+# Execute the script.
+$HOMEverf_precip/scripts/exverf_precip_verfgen_$vhour.sh.ecf
+#######################################################################
+cat $pgmout
+msg="JOB $job HAS COMPLETED NORMALLY."
+postmsg "$jlogfile" "$msg"
+
+if [ "$KEEPDATA" != "YES" ] ; then
+  cd $DATAROOT
+  rm -rf $DATA
+fi
+
+date

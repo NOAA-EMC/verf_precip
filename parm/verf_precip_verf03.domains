@@ -1,0 +1,25 @@
+####################################################################################################
+# This data input card defines the input variables for the script to process the 24-hourly model
+# verification, where the
+#   1st entry: Model Name
+#   2nd entry: Verification length (03h)
+#   3rd entry: Verification grid(s)
+#   4th entry: Verification cycles
+#   5th entry: Precipitation bucket length
+#   6th entry: The model forecast range that is used for the verification
+#   7th entry: Nests
+#
+# Note: if you need to add a new model, please add it to the end of this file.
+#####################################################################################################
+#=========================================
+#model|vlen|grids|cycles|blen|frange|nests
+#=========================================
+gfs|3|218|00 06 12 18|6|180|
+nam|3|218|00 12|12|84|
+nam|3|218|06 18|3|84|
+conusnest|3|218|00 06 12 18|03|60
+conusnmmb|3|218|00 12|3|48
+conusarw|3|218|00 12|3|48
+conusarw2|3|218|00 12|3|48
+rap|3|218|00 03 06 09 12 15 18 21|01|39|
+hrrr|3|218|00 06 12 18|01|36|
