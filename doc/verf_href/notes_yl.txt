@@ -120,6 +120,22 @@ VSDB Line count, 2018/02/02:
     
 
 Forecast hours: 06/12/18/24/30/36
+
+------------------------
+2019/10/17
+e.g. href_20191229.vsdb:
+  Normal VSDB files: 176 lines
+  48 lines for 00/12Z
+  40 lines for 06/18Z
+  2019101500/2019101512:
+    HIST/RELP/RMSE/RELI/HTFR/RPS/BSS/ECON for 06/12/18/24/30/36h fcsts 
+      8x6=48 lines for each valid hour (00/12Z)
+  2019101506/2019101518:
+    as for 00/12Z, but for 06/12/18/24/30h fcsts 
+      8x5=40 lines for each valid hour (00/12Z)
+------------------------
+
+
   
 Run job once a day.  Any time the next day - (need to have CCPA for 18Z $daym1 
   ready, since we're running it for $daym1).  YL Note: should run for $daym2, 
@@ -251,5 +267,10 @@ Debug: to run only the 00Z cycle, go to ush/verf_g2g_href.sh, and change
 to
   END=00
 
+-------------------------------------------------------------------------
+For HREFv3:
+  Input file in 
+  /gpfs/hps2/ptmp/Matthew.Pyle/com/hiresw/test/href.20200101_expv3/verf_g2g
+   
 
 

@@ -69,13 +69,14 @@ if [ $# -ge 3 ]; then
 fi
 
 if [ "$RUN_ENVIR" = dev ]; then        ### for dev 
-  export COMCCPA=`compath.py ccpa/prod`/ccpa
+  #export COMCCPA=`compath.py ccpa/prod`/ccpa
+  export COMCCPA=/gpfs/dell2/ptmp/Ying.Lin/ccpa/ccpa
 # ------------------------------------------------------
 # Most frequently made changes: 
   export NOSCRUB=/gpfs/dell2/emc/verification/noscrub/Ying.Lin
-  export HOMEverf_precip=$NOSCRUB/verf_precip
-  export PARMverf_precip=$HOMEverf_precip/parm.dev
-  export DATAverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf.dat
+  export HOMEverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf_precip.v4.3.4
+  export PARMverf_precip=$HOMEverf_precip/parm
+  export DATAverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf.dat.v4.3.4
   export COMVSDB=$DATAverf_precip/vsdb
   export bsubnext=Y   # bsub PLOT and FSS, if other conditions are met? 
   # Location of the 45-day rotating archive:

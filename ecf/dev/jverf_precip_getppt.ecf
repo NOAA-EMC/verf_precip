@@ -22,7 +22,7 @@ export RUN_ENVIR=dev
 export retro=N
 export debug=N
 
-export version=v4.3.2
+export version=v4.3.4
 
 # This script has three optional arguments if run interactively.  WCOSS LSF 
 # (bsub) does not accept arguments in the LSF script, in that case, set up
@@ -67,10 +67,10 @@ fi
 if [ "$RUN_ENVIR" = dev ]; then        ### for dev 
 # ------------------------------------------------------
 # Most frequently made changes: 
-  export HOMEverf_precip=/gpfs/dell2/emc/verification/noscrub/Ying.Lin/verf_precip.${version}
+  export HOMEverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf_precip.$version
   export PARMverf_precip=$HOMEverf_precip/parm
-  export DATAverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf.dat.${version}
-  export bsubnext=Y   # bsub verfgen24 and verfgen03?  
+  export DATAverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf.dat.$version
+  export bsubnext=N   # bsub verfgen24 and verfgen03?  
 # ------------------------------------------------------
   # DATAROOT is NCO-speak for 'wrkdir'.
   export DATAROOT=/gpfs/dell2/stmp/$LOGNAME/tmpnwprd
@@ -85,7 +85,7 @@ $HOMEverf_precip/jobs/JVERF_PRECIP_GETPPT
 if [ "$RUN_ENVIR" = dev ]; then  ### for dev only
   userid=`whoami`
   if [ $bsubnext = Y -a $cronmode = Y -a "$userid" = Ying.Lin ]; then
-    . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/jverf_precip_verfgen_03h.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.verfgen03.out 2>&1
-    . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/jverf_precip_verfgen_24h.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.verfgen24.out 2>&1
+    . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/dev/jverf_precip_verfgen_03h.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.verfgen03.out 2>&1
+    . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/dev/jverf_precip_verfgen_24h.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.verfgen24.out 2>&1
   fi
 fi

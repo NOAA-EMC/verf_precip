@@ -44,7 +44,7 @@ echo 'Actual output starts here:'
 if [ "$RUN_ENVIR" = dev ]    ### For Developers
 then
   # PARMverf_precip is set in the ecf/sms script.  It is either 'parm' or
-  # parm.dev.$machine, under $HOMEverf_precip.  
+  # parm.dev, under $HOMEverf_precip.  
   . $PARMverf_precip/verf_precip_config
   export DATAROOT=${DATAROOT:-/tmpnwprd2}
   export SENDDBN=NO
