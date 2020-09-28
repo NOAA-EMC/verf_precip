@@ -8,11 +8,11 @@
 if [ $RUN_ENVIR = dev ]
 then
 
-# For dev, HOMEverf_precip and PARMverf_precip are set by the ECF script.
-#   PARMverf_precip is either 'parm' or 'parm.dev.wcoss' (or parm.dev.zeus)
+# For dev, HOMEverf_precip is set by the ECF script.
+#   PARMverf_precip is either 'parm' or 'parm.dev'.  It's not set in this file,
+#   so we don't have to change verf_precip_config when testing a new package 
 #   under HOMEverf_precip
   export EXECverf_precip=$HOMEverf_precip/exec
-  export PARMverf_precip=$HOMEverf_precip/parm
   export USHverf_precip=$HOMEverf_precip/ush
   export UTLDEVverf_precip=$HOMEverf_precip/util.dev
   export FIXverf_precip=$HOMEverf_precip/fix

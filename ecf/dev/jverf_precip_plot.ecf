@@ -25,6 +25,7 @@ export retro=N
 export debug=N
 export domain=conus
 export job=verf_precip_plot_$domain
+export SENDRZDM=YES
 
 export version=v4.3.2
 
@@ -69,9 +70,9 @@ if [ "$RUN_ENVIR" = dev ]; then        ### for dev
 # ------------------------------------------------------
 # Most frequently made changes: 
   export NOSCRUB=/gpfs/dell2/emc/verification/noscrub/Ying.Lin
-  export HOMEverf_precip=$NOSCRUB/verf_precip.${version}
-  export PARMverf_precip=$HOMEverf_precip/parm
-  export DATAverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf.dat.${version}
+  export HOMEverf_precip=$NOSCRUB/verf_precip
+  export PARMverf_precip=$HOMEverf_precip/parm.dev
+  export DATAverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf.dat
 #
   export bsubnext=Y   # bsub the transfer to RZDM,if other conditions are met? 
   # Location of the 45-day rotating archive:
@@ -96,9 +97,9 @@ if [ $RUN_ENVIR = dev -a $SENDRZDM = YES ]
 then
   
   if [ $cronmode = Y ]; then
-    . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/util.dev/trans_send2rzdm.ksh > /ptmpp1/Ying.Lin/cron.out/cron.send2rzdm_${domain} 2>&1
+    . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/util.dev/trans_send2rzdm.ksh > $CRONOUT/cron.send2rzdm_${domain} 2>&1
   else
-    $HOMEverf_precip/util.dev/trans_send2rzdm.ksh > /ptmpp1/Ying.Lin/cron.out/cron.send2rzdm_${domain} 2>&1
+    . ~/.bashrc > ~/cron.bashrc.out 2>&1; $HOMEverf_precip/util.dev/trans_send2rzdm.ksh > $CRONOUT/cron.send2rzdm_${domain} 2>&1
   fi
 fi
 
