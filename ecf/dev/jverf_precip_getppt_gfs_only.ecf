@@ -1,28 +1,20 @@
-#!/bin/bash
+#!/bin/ksh
 #BSUB -J jverf_precip_getppt
-#BSUB -o /gpfs/dell2/ptmp/Ying.Lin/cron.out/getppt.%J
-#BSUB -e /gpfs/dell2/ptmp/Ying.Lin/cron.out/getppt.%J
+#BSUB -oo /ptmpp2/Ying.Lin/cron.out/getppt.gfs.%J
+#BSUB -eo /ptmpp2/Ying.Lin/cron.out/getppt.gfs.%J
+#BSUB -cwd /stmpd3/Ying.Lin
 #BSUB -n 1
-#BSUB -q "dev"
+#BSUB -q "dev2"
 #BSUB -W 1:25
 #BSUB -P VERF-T2O
-#BSUB -R span[ptile=1]
 
 set -x 
-module purge
-module load ips/18.0.5.274    # for prod_util
-module load prod_util/1.1.3
-module load prod_envir/1.0.3
-module load grib_util/1.1.1
-
 export envir=dev
 export cyc=00
 export job=verf_precip_getppt
 export RUN_ENVIR=dev
 export retro=N
 export debug=N
-
-export version=v4.3.2
 
 # This script has three optional arguments if run interactively.  WCOSS LSF 
 # (bsub) does not accept arguments in the LSF script, in that case, set up
@@ -41,51 +33,29 @@ export version=v4.3.2
 # 2014/5/20: we are adding another exported parameter, 'bsubnext', set to 'N'
 # in the J-job unless specified otherwise in the ECF (this) script.  
 # set it to 'no' for testing. 
-export cronmode=Y
-
-if [ $# -ge 1 ]; then
-  export vday=$1
-  cronmode=N
-fi
-
-if [ $# -ge 2 ]; then
-  if [ $2 = retro ]; then
-    retro=Y
-  elif [ $2 = debug ]; then
-    debug=Y
-  fi
-fi
-
-if [ $# -ge 3 ]; then
-  if [ $3 = retro ]; then
-    retro=Y
-  elif [ $3 = debug ]; then
-    debug=Y
-  fi
-fi
+export cronmode=N
+export retro=Y
+export debug=Y
 
 if [ "$RUN_ENVIR" = dev ]; then        ### for dev 
 # ------------------------------------------------------
+# .profile loads prod_util - sets up paths for setpdy, err_chk, postmsg etc.
+  . /u/Ying.Lin/.profile 
+
 # Most frequently made changes: 
-  export HOMEverf_precip=/gpfs/dell2/emc/verification/noscrub/Ying.Lin/verf_precip.${version}
-  export PARMverf_precip=$HOMEverf_precip/parm
-  export DATAverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf.dat.${version}
-  export bsubnext=Y   # bsub verfgen24 and verfgen03?  
+  export HOMEverf_precip=/meso/save/$LOGNAME/pcpverif/nextjif
+  export PARMverf_precip=$HOMEverf_precip/parm.dev.wcoss
+  export DATAverf_precip=/ptmpp1/$LOGNAME/verf.dat.gfsonly
+  export bsubnext=N   # bsub verfgen24 and verfgen03?  
 # ------------------------------------------------------
   # DATAROOT is NCO-speak for 'wrkdir'.
-  export DATAROOT=/gpfs/dell2/stmp/$LOGNAME/tmpnwprd
+  export COMROOT=/com               # needed for setpdy,e g. /com/date/t20z
+  export DATAROOT=/stmpd3/$LOGNAME/tmpnwprd
 # export vday=20160204
 else                                   ### for prod/para/test
-  export HOMEverf_precip=/gpfs/dell1/nco/ops/nw${envir}/verf_precip.${version}
+  export HOMEverf_precip=/nw${envir}/pcpverif.v3.5.0
 fi # end of 'is this dev?' 
 
 $HOMEverf_precip/jobs/JVERF_PRECIP_GETPPT
 
 
-if [ "$RUN_ENVIR" = dev ]; then  ### for dev only
-  userid=`whoami`
-  if [ $bsubnext = Y -a $cronmode = Y -a "$userid" = Ying.Lin ]; then
-    . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/jverf_precip_verfgen_03h.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.verfgen03.out 2>&1
-    . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/jverf_precip_verfgen_24h.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.verfgen24.out 2>&1
-  fi
-fi

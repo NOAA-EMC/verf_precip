@@ -73,9 +73,9 @@ if [ "$RUN_ENVIR" = dev ]; then        ### for dev
 # ------------------------------------------------------
 # Most frequently made changes: 
   export NOSCRUB=/gpfs/dell2/emc/verification/noscrub/Ying.Lin
-  export HOMEverf_precip=$NOSCRUB/verf_precip
-  export PARMverf_precip=$HOMEverf_precip/parm.dev
-  export DATAverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf.dat
+  export HOMEverf_precip=$NOSCRUB/verf_precip.${version}
+  export PARMverf_precip=$HOMEverf_precip/parm
+  export DATAverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf.dat.${version}
   export COMVSDB=$DATAverf_precip/vsdb
   export bsubnext=Y   # bsub PLOT and FSS, if other conditions are met? 
   # Location of the 45-day rotating archive:
@@ -100,10 +100,10 @@ $HOMEverf_precip/jobs/JVERF_PRECIP_VERFGEN_24H
 if [ "$RUN_ENVIR" = dev ]; then  ### for dev only
   if [ $bsubnext = Y -a $cronmode = Y ]; then
     if [ $domain = conus ]; then
-      . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/dev/jverf_precip_plot.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.conus_plot.out 2>&1
-      . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/dev/jverf_precip_fss_24h.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.fss24.out 2>&1
+      $HOMEverf_precip/ecf/jverf_precip_plot.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/verfplot.conus.v${vday}.out 2>&1
+      . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/jverf_precip_fss_24h.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.fss24.out 2>&1
     else
-      . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/dev/jverf_precip_plot.oconus.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.verfplot.oconus.out 2>&1
+      . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/jverf_precip_plot.oconus.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.verfplot.oconus.out 2>&1
     fi
   fi
 fi
