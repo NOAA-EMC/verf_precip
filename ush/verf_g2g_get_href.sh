@@ -16,7 +16,7 @@ if [ $modnam = reference2 ] ; then
   cycles="00 06 12 18"
 
   for cyc in $cycles ; do
-   for fhr in 06 12 18 24 30 36 ; do
+   for fhr in 06 12 18 24 30 36 42 48 ; do
 
      namnest=$COMNAM.${vday}/nam.t${cyc}z.conusnest.hiresf${fhr}.tm00.grib2
      $WGRIB2 -match ":APCP:surface" $namnest |$WGRIB2 -i  $namnest -grib  $DATA/apcp
@@ -37,11 +37,11 @@ if [ $modnam = href ] ; then
   dd=${vday:6:2}
 
   for cycle in 00 06 12 18 ; do
-    for fhr in 06 12 18 24 30 36 ; do
-      for mbr in 01 02 03 04 05 06 07 08 ; do
-        href=${COMHREF}.${vday}/verf_g2g/href.m${mbr}.t${cycle}z.conus.f${fhr}
+    for fhr in 06 12 18 24 30 36 42 48; do
+      for mbr in 01 02 03 04 05 06 07 08 09 10; do
+#        href=${COMHREF}.${vday}_expv3/verf_g2g/href.m${mbr}.t${cycle}z.conus.f${fhr}
 #       use 'prcip' below, instead of href.m*?        
-#        href=${COMHREF}.${vday}/verf_g2g/prcip.m${mbr}.t${cycle}z.conus.f${fhr}
+        href=${COMHREF}.${vday}/verf_g2g/prcip.m${mbr}.t${cycle}z.conus.f${fhr}
         if [ -s $href ]; then 
 # YL: 
 #         find field that matches ":APCP:surface" in $href, output it to 
@@ -60,5 +60,13 @@ if [ $modnam = href ] ; then
       done
     done
   done 
+
+  for cycle in 00 12 ; do
+     mv $COMOUT/href.ens08.t${cycle}z.apcp.f48.grib2  $COMOUT/href.ens04.t${cycle}z.apcp.f48.grib2
+  done
+
+  for cycle in 06 18 ; do
+     mv $COMOUT/href.ens05.t${cycle}z.apcp.f48.grib2  $COMOUT/href.ens04.t${cycle}z.apcp.f48.grib2
+  done
 
 fi

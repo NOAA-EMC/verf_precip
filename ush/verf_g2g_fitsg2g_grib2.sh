@@ -104,7 +104,8 @@ elif [ $mdl = 'fnmoc2' ] ; then
     mv grid2grid.vsdb FNMOC2P5_${YYYYMMDDHH}.vsdb
   fi
 elif [ $ens = 'href' ] ; then
-    mv grid2grid.vsdb HREF_${var}_${YYYYMMDDHH}.vsdb
+    cat grid2grid.vsdb >> HREF_${var}_${YYYYMMDDHH}.vsdb
+    rm -f grid2grid.vsdb
 else
  mv grid2grid.vsdb ${model}_${YYYYMMDDHH}.vsdb
 fi
