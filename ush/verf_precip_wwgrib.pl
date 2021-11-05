@@ -19,6 +19,8 @@
 # is not part of the normal inventory
 
 $wgrib="/$ENV{WGRIBpath}/wgrib";
+#$wgrib="/apps/ops/prod/libs/intel/19.1.3.304/grib_util/1.2.3/bin/wgrib";
+#/apps/ops/prod/libs/intel/19.1.3.304/grib_util/1.2.3/bin/wgrib
 
 open (IN, "$wgrib -PDS10 -V $ARGV[0] |");
 

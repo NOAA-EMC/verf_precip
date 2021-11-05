@@ -140,7 +140,7 @@ if [ $SENDCOM = YES ]
 then
   cp vsdb3.$vday.tar ${COMOUT}.${vday}/.
  
-  if [ $RUN_ENVIR = "dev" -a $LOGNAME = "Ying.Lin" ]
+  if [ $RUN_ENVIR = "dev" -a $LOGNAME = "Alicia.Bentley" ]
   then
     cp vsdb3.$vday.tar $ARCH45DAY/.
 #   scp vsdb3.$vday.tar gcp@rzdm:/home/ftp/emc/mmb/gcp/precip/files/.

@@ -1,6 +1,6 @@
 SHELL=          /bin/sh
 
-FC=             ifort
+FC=             ${COMP}
 FFLAGS=         -FR -cpp 
 
 LDFLAGS=        

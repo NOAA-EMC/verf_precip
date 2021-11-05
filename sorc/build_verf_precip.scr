@@ -1,8 +1,27 @@
 #!/bin/sh
 set -x
+
+source ../versions/build.ver
 module purge
-module use ../modulefiles
-module load VERF_PRECIP
+
+export COMP=ftn
+
+module load envvar/${envvar_ver}
+module load intel/${intel_ver}
+module load PrgEnv-intel/${PrgEnvintel_ver}
+module load craype/${craype_ver}
+module load cray-mpich/${craympich_ver}
+module load bufr/${bufr_ver}
+module load libjpeg/${libjpeg_ver}
+module load bacio/${bacio_ver}
+module load w3emc/${w3emc_ver}
+module load w3nco/${w3nco_ver}
+module load ip/${ip_ver}
+module load sp/${sp_ver}
+module load g2/${g2_ver}
+module load jasper/${jasper_ver}
+module load libpng/${libpng_ver}
+module load zlib/${zlib_ver}
 
 module list
 

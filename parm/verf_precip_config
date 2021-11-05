@@ -22,35 +22,39 @@ then
 #   obtained the model QPF files but the verification is done in the para 
 #   side), we specify a secondary COMIN2. 
   export COMIN1=$DATAverf_precip/precip
-  export COMIN2=/gpfs/dell1/nco/ops/com/verf/prod/precip
+  export COMIN2=/lfs/h1/ops/canned/com/verf/v4.5/precip
+#  export COMIN2=/lfs/h1/ops/prod/com/verf_precip/${verf_precip_ver}/verf_precip
+#  export COMIN2=${COMIN2:-$(compath.py $envir/$NET/$verf_precip_ver/$RUN)}
+  export COMIN2=$COMIN1
   export COMIN=$COMIN1
-  export COMOUT=$DATAverf_precip/precip
+  export COMOUT=/lfs/h2/emc/ptmp/$LOGNAME/verf.dat/${verf_precip_ver}/precip
 # Specify COMVSDB in VERFGEN ecf files.  Otherwise COMVSDB is not needed.
 ##  export COMVSDB=$DATAverf_precip/vsdb.oconus
 ##  export COMVSDB=$DATAverf_precip/vsdb
 # If we're making a re-run for days when the verif analysis is no longer on 
 #   disk, activate the alternative COMINpcpanl (don't forget to change this back
 #   right away)
-#  export COMINpcpanl=/gpfs/dell2/ptmp/Ying.Lin/com/hourly/prod
-  export COMINpcpanl=/gpfs/dell2/nco/ops/com/pcpanl/prod
+#  export COMINpcpanl=/gpfs/dell2/nco/ops/com/pcpanl/prod
+#  export COMINpcpanl=/lfs/h1/ops/canned/com/pcpanl/${pcpanl_ver}
+  export COMINpcpanl=${COMINpcpanl:-$(compath.py prod/com/pcpanl/${pcpanl_ver})}
   export SENDCOM=YES
   export SENDSMS=NO
   export SENDDBN=NO
-  export SENDRZDM=YES   # for daily side-by-side plots
+  export SENDRZDM=NO   # for daily side-by-side plots
 elif [ $RUN_ENVIR = para -o $RUN_ENVIR = test ]
 then
-  export HOMEverf_precip=/gpfs/dell1/nco/ops/nw${envir}
+  export HOMEverf_precip=/lfs/h1/ops/${envir}/packages/verf_precip.${verf_precip_ver}
   export EXECverf_precip=$HOMEverf_precip/exec
   export PARMverf_precip=$HOMEverf_precip/parm
   export USHverf_precip=$HOMEverf_precip/ush
   export FIXverf_precip=$HOMEverf_precip/fix
 
-  export COMIN1=$DATAverf_precip/precip
-  export COMIN2=/gpfs/dell2/nco/ops/com/verf/prod/precip
+  export COMIN1=$DATAverf_precip/verf_precip
+  export COMIN2=${COMIN2:-$(compath.py $envir/$NET/$verf_precip_ver/$RUN)}
   export COMIN=$COMIN1
-  export COMOUT=/gpfs/dell2/nco/ops/com/verf/${envir}/precip
-  export COMVSDB=/gpfs/dell2/nco/ops/com/verf/${envir}/vsdb/precip
-  export COMINpcpanl=/gpfs/dell2/nco/ops/com/pcpanl/prod
+  export COMOUT=${COMOUT:-$(compath.py -o $NET/$verf_precip_ver/$RUN)}
+  export COMVSDB=${COMVSDB:-$(compath.py -o $NET/$verf_precip_ver/vsdb/$RUN)}
+  export COMINpcpanl=${COMINpcpanl:-$(compath.py $envir/com/pcpanl/${pcpanl_ver})}
 
   export SENDCOM=YES
   export SENDSMS=YES
@@ -58,18 +62,18 @@ then
   export SENDRZDM=NO   # for daily side-by-side plots
 elif [ $RUN_ENVIR = prod ]
 then
-  export HOMEverf_precip=/gpfs/dell1/nco/ops/nw${envir}/verf_precip.${version}
+  export HOMEverf_precip=/lfs/h1/ops/${envir}/packages/verf_precip.${verf_precip_ver}
   export EXECverf_precip=$HOMEverf_precip/exec
   export PARMverf_precip=$HOMEverf_precip/parm
   export USHverf_precip=$HOMEverf_precip/ush
   export FIXverf_precip=$HOMEverf_precip/fix
 
-  export COMIN1=$DATAverf_precip/precip
-  export COMIN2=/gpfs/dell2/nco/ops/com/verf/prod/precip
+  export COMIN1=$DATAverf_precip/verf_precip
+  export COMIN2=${COMIN2:-$(compath.py $envir/$NET/$verf_precip_ver/$RUN)}
   export COMIN=$COMIN1
-  export COMOUT=/gpfs/dell2/nco/ops/com/verf/${envir}/precip
-  export COMVSDB=/gpfs/dell2/nco/ops/com/verf/${envir}/vsdb/precip
-  export COMINpcpanl=/gpfs/dell2/nco/ops/com/pcpanl/prod
+  export COMOUT=${COMOUT:-$(compath.py -o $NET/$verf_precip_ver/$RUN)}
+  export COMVSDB=${COMVSDB:-$(compath.py -o $NET/$verf_precip_ver/vsdb/$RUN)}
+  export COMINpcpanl=${COMINpcpanl:-$(compath.py $envir/com/pcpanl/${pcpanl_ver})}
 
   export SENDCOM=YES
   export SENDSMS=YES

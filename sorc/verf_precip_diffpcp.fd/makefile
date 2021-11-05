@@ -1,7 +1,7 @@
 SHELL=		/bin/sh
 
 LIBS=           ${W3NCO_LIB4} ${W3EMC_LIB4} ${BACIO_LIB4}
-FC=             ifort
+FC=             ${COMP}
 FFLAGS=         -FR -cpp 
 
 LDFLAGS=

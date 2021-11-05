@@ -37,9 +37,9 @@ if [ "$RUN_ENVIR" = dev ]    ### For Developers
 then
   # PARMverf_precip is set in the ecf/sms script.  It is either 'parm' or
   # parm.dev.$machine, under $HOMEverf_precip.  
-  . $PARMverf_precip/verf_precip_config
-  export DATAROOT=${DATAROOT:-/tmpnwprd2}
-  export jlogfile=${jlogfile:-$DATAROOT/jlogfile}
+#  . $PARMverf_precip/verf_precip_config
+#  export DATAROOT=${DATAROOT:-/tmpnwprd2}
+#  export jlogfile=${jlogfile:-$DATAROOT/jlogfile}
   export SENDDBN=NO
   if [ $debug = N ]; then
     KEEPDATA=NO
@@ -100,7 +100,7 @@ export SENDRZDM=${SENDRZDM:-NO}      # for daily side-by-side plots
 # Specify Execution Areas
 # Non-dev uses the follwing block instead of parm/verf_precip_config
 ################################################################
-export HOMEverf_precip=${HOMEverf_precip:-${NWROOT}/verf_precip.${verf_precip_ver}}
+export HOMEverf_precip=${HOMEverf_precip:-${PACKAGEROOT}/verf_precip.${verf_precip_ver}}
 export EXECverf_precip=${EXECverf_precip:-$HOMEverf_precip/exec}
 export PARMverf_precip=${PARMverf_precip:-$HOMEverf_precip/parm}
 export USHverf_precip=${USHverf_precip:-$HOMEverf_precip/ush}
@@ -109,9 +109,8 @@ export FIXverf_precip=${FIXverf_precip:-$HOMEverf_precip/fix}
 ###################################
 # Set up the UTILITIES
 ###################################
-
 # for wwgrib: find the path of wgrib2: 
-export WGRIBpath=`echo $WGRIB2 | sed 's/\/wgrib2//'`
+export WGRIBpath=`echo $WGRIB | sed 's/\/wgrib//'`
 
 # -----------------  Note for Dev --------------------------------------------
 # set 'bsubnext' to 'N' unless specified in the dev ECF script.  This is one of
@@ -132,7 +131,7 @@ if [ $machine = theia ]; then
 else
   # Run setpdy and initialize PDY variables
   setpdy.sh
-  . PDY
+  . $DATA/PDY
 fi
 
 export vday=${vday:-$PDYm1}
@@ -140,22 +139,29 @@ export vday=${vday:-$PDYm1}
 #################################################
 # Set up the INPUT and OUTPUT directories
 #################################################
-export COMIN1=${COMIN1:-$COMROOT/verf/${envir}/precip}
-export COMIN2=${COMIN2:-$COMROOT/verf/${envir}/precip}
-export COMIN=${COMIN:-$COMROOT/verf/${envir}/precip}
-export COMINpcpanl=${COMINpcpanl:-$(compath.py pcpanl/prod)}
+export COMIN=${COMIN:-$(compath.py -o ${NET}/${verf_precip_ver}/${RUN})}
+# In dev mode, some model precip files might come from prod side of $COMIN
+# (specified in parm file with 'altcomin', in which case, the scripts will
+# look for input file in the alternative directory '$COMIN2'.  If altcomin
+# is null, then COMIN=$COMIN1.  This is set in the dev parm/verf_precip_config.
+# Since prod side does not use that parm file, we need to pre-specify
+# that COMIN1=$COMIN.
+export COMIN1=${COMIN}
+export COMIN2=${COMIN}
+export COMOUT=${COMOUT:-$(compath.py -o ${NET}/${verf_precip_ver}/${RUN})}
+export COMVSDB=${COMVSDB:-$(compath.py -o ${NET}/${verf_precip_ver}/vsdb/${RUN})}
+export COMINpcpanl=${COMINpcpanl:-$(compath.py $envir/com/pcpanl/${pcpanl_ver})}
 # COMCCPA is a prefix, not directory name.  Directory is
 #   $(compath.py ccpa/prod)/ccpa.yyyymmdd
-export COMCCPA=${COMCCPA:-$(compath.py ccpa/prod)/ccpa}
-export COMOUT=${COMOUT:-$COMROOT/verf/${envir}/precip}
-export COMVSDB=${COMVSDB:-$COMROOT/verf/${envir}/vsdb/precip}
+export COMCCPA=${COMCCPA:-$(compath.py $envir/com/ccpa/${ccpa_ver}/ccpa)}
 
 if [ ! -d $COMVSDB ]; then
   mkdir -p -m 775 $COMVSDB
 fi
-if [ ! -d $COMOUT ]; then
-  mkdir -p -m 775 $COMOUT
-fi
+# don't create verf/v4.5/precip/.  It's always empty.
+#if [ ! -d $COMOUT ]; then
+#  mkdir -p -m 775 $COMOUT
+#fi
 
 if [ $domain = conus ]; then
   # Verifying analysis is CCPA (if CCPA is not availab, use ST4 for backup), 

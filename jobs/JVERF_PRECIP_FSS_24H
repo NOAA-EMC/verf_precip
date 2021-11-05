@@ -36,13 +36,12 @@ export SENDECF=${SENDECF:-YES}
 #################################################################
 
 # export VERFANL so fss.f knows what analysis to put into the VSDB record.
-export VERFANL=CCPA 
 if [ "$RUN_ENVIR" = dev ]    ### For Developers
 then
   # PARMverf_precip is set in the ecf/sms script.  It is either 'parm' or
   # parm.dev.$machine, under $HOMEverf_precip.  
-  . $PARMverf_precip/verf_precip_config
-  export DATAROOT=${DATAROOT:-/tmpnwprd2}
+#  . $PARMverf_precip/verf_precip_config
+#  export DATAROOT=${DATAROOT:-/tmpnwprd2}
   export SENDDBN=NO
   if [ $debug = N ]; then
     KEEPDATA=NO
@@ -68,6 +67,11 @@ export pid=$$
 export DATA=$DATAROOT/${job}.${pid}
 mkdir -p $DATA
 cd $DATA 
+
+####################################
+# File To Log Msgs
+####################################
+export jlogfile=${jlogfile:-${DATA}/jlogfile}
 
 ####################################
 # Determine Job Output Name on System
@@ -97,7 +101,7 @@ export SENDRZDM=${SENDRZDM:-NO}      # for daily side-by-side plots
 # Specify Execution Areas
 # Non-dev uses the follwing block instead of parm/verf_precip_config
 ################################################################
-export HOMEverf_precip=${HOMEverf_precip:-/gpfs/dell1/nco/ops/nw${envir}/verf_precip.${verf_precip_ver}}
+export HOMEverf_precip=${HOMEverf_precip:-${PACKAGEROOT}/verf_precip.${verf_precip_ver}}
 export EXECverf_precip=${EXECverf_precip:-$HOMEverf_precip/exec}
 export PARMverf_precip=${PARMverf_precip:-$HOMEverf_precip/parm}
 export USHverf_precip=${USHverf_precip:-$HOMEverf_precip/ush}
@@ -126,7 +130,7 @@ if [ $machine = theia ]; then
 else
   # Run setpdy and initialize PDY variables
   setpdy.sh
-  . PDY
+  . $DATA/PDY
 fi
 
 export vday=${vday:-$PDYm1}
@@ -134,19 +138,21 @@ export vday=${vday:-$PDYm1}
 #################################################
 # Set up the INPUT and OUTPUT directories
 #################################################
-export COMIN=${COMIN:-$COMROOT/verf/${envir}/precip}
-export COMINpcpanl=${COMINpcpanl:-$(compath.py pcpanl/prod)}
-export COMCCPA=${COMCCPA:-$(compath.py ccpa/prod)/ccpa}
-
-export COMOUT=${COMOUT:-$COMROOT/verf/${envir}/precip}
-export COMVSDB=${COMVSDB:-$COMROOT/verf/${envir}/vsdb/precip}
+export COMIN=${COMIN:-$(compath.py -o ${NET}/${verf_precip_ver}/${RUN})}
+export COMOUT=${COMOUT:-$(compath.py -o ${NET}/${verf_precip_ver}/${RUN})}
+export COMVSDB=${COMVSDB:-$(compath.py -o ${NET}/${verf_precip_ver}/vsdb/${RUN})}
+export COMINpcpanl=${COMINpcpanl:-$(compath.py $envir/com/pcpanl/${pcpanl_ver})}
+# COMCCPA is a prefix, not directory name.  Directory is
+#   $(compath.py ccpa/prod)/ccpa.yyyymmdd
+export COMCCPA=${COMCCPA:-$(compath.py $envir/com/ccpa/${ccpa_ver}/ccpa)}
 
 if [ ! -d $COMVSDB ]; then
   mkdir -p -m 775 $COMVSDB
 fi
-if [ ! -d $COMOUT ]; then
-  mkdir -p -m 775 $COMOUT
-fi
+# don't create verf/v4.5/precip/.  It's always empty.
+#if [ ! -d $COMOUT ]; then
+#  mkdir -p -m 775 $COMOUT
+#fi
 
 env
 

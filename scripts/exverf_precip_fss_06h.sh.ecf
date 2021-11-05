@@ -79,7 +79,8 @@ echo
 #############################################################
 # Execute the script.
 #############################################################
-mpirun -l cfp poescript
+#mpirun -l cfp poescript
+mpiexec  -np 4 --cpu-bind core cfp ./poescript
 if [ "$envir" != dev ]; then
   export err=$?; err_chk
 fi

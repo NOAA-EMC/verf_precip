@@ -1,7 +1,7 @@
 SHELL=          /bin/sh
 LIBS=           
 
-FC=             ifort
+FC=             ${COMP}
 FFLAGS=         -FR -cpp 
 
 LDFLAGS=

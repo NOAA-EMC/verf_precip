@@ -152,9 +152,9 @@ do
   accfile=${model}_${mdate}_${tbgn}_${tend}
   modfile=${model}_${mdate}_${tbgn}_${tend}.$vgrid
 
-# extract the 24h QPF file from $COMOUT.$vday/24hrawqpf.$vday.gz (by-product
+# extract the 24h QPF file from $COMIN.$vday/24hrawqpf.$vday.gz (by-product
 # of VERFGEN24):
-  tar xvf $COMOUT.$vday/24hrawqpf.$vday.gz ./$accfile 
+  tar xvf $COMIN.$vday/24hrawqpf.$vday.gz ./$accfile 
   if [ $? -eq 0 ]; then
     if [ $vgrid -eq 240 ]; then
       gridhrap="255 5 1121 881 23117 -119023 8 -105000 4763 4763 0 64"

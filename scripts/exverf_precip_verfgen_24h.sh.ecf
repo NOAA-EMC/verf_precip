@@ -120,7 +120,7 @@ else # if we are verifying OCONUS
     # Here, when cronmode=N, the calling sequence is reversed.  We're invoking
     # the script with an argument, $vday, to tell the script not to do the
     # "bsub ecf/verfgen24".  
-    $HOMEverf_precip/util.dev/trans_get_oconus_anl.ksh $vday > /ptmpp1/Ying.Lin/cron.out/getoconusanl.out 2>&1
+    $HOMEverf_precip/util.dev/trans_get_oconus_anl.ksh $vday > /lfs/h2/emc/ptmp/Alicia.Bentley/cron.out/getoconusanl.out 2>&1
   fi # If cronmode = Y, then the trans_get_oconus_anl.ksh script has already
      #   been run and placed in ${COMOUT}.${vday}.
      
@@ -164,7 +164,7 @@ else # if we are verifying OCONUS
 
   # Get Alaska QPE file. 
   akqpe=QPE.151.${vday}12.24h
-  cp $DCOMROOT/prod/$vday/wgrbbul/qpe/$akqpe .
+  cp $DCOMROOT/$vday/wgrbbul/qpe/$akqpe .
   err=$?
   if [ $err -eq 0 ]; then
     akflag=YES
@@ -215,7 +215,7 @@ then
 
   if [ $RUN_ENVIR = dev -a $machine = wcoss -a "$ARCH45DAY" != "" ]
   then
-    if [ $LOGNAME = "Ying.Lin" -o $LOGNAME = "wx22yl" ]
+    if [ $LOGNAME = "Alicia.Bentley" -o $LOGNAME = "wx22yl" ]
     then
       if [ ! -d $ARCH45DAY ]; then mkdir -p $ARCH45DAY; fi
       cp vsdb24.$vday.tar $ARCH45DAY/.

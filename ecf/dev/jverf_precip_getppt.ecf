@@ -1,19 +1,29 @@
 #!/bin/bash
-#BSUB -J jverf_precip_getppt
-#BSUB -o /gpfs/dell2/ptmp/Ying.Lin/cron.out/getppt.%J
-#BSUB -e /gpfs/dell2/ptmp/Ying.Lin/cron.out/getppt.%J
-#BSUB -n 1
-#BSUB -q "dev"
-#BSUB -W 1:25
-#BSUB -P VERF-T2O
-#BSUB -R span[ptile=1]
+#PBS -N jverf_precip_getppt
+#PBS -o /lfs/h2/emc/ptmp/Alicia.Bentley/cron.out/getppt.out
+#PBS -e /lfs/h2/emc/ptmp/Alicia.Bentley/cron.out/getppt.err
+#PBS -l select=1:ncpus=2:mem=1GB
+#PBS -q dev
+#PBS -l walltime=01:25:00
+#PBS -A VERF-DEV
+
 
 set -x 
+source /lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/verf_precip/versions/run.ver
 module purge
-module load ips/18.0.5.274    # for prod_util
-module load prod_util/1.1.3
-module load prod_envir/1.0.3
-module load grib_util/1.1.1
+module load envvar/${envvar_ver}
+module load intel/${intel_ver}
+module load PrgEnv-intel/${PrgEnvintel_ver}
+module load craype/${craype_ver}
+module load cray-mpich/${craympich_ver}
+module load cray-pals/${craypals_ver}
+module load prod_util/${prod_util_ver}
+module load prod_envir/${prod_envir_ver}
+module load libjpeg/${libjpeg_ver}
+module load grib_util/${grib_util_ver}
+module load wgrib2/${wgrib2_ver}
+
+module list
 
 export envir=dev
 export cyc=00
@@ -21,8 +31,6 @@ export job=verf_precip_getppt
 export RUN_ENVIR=dev
 export retro=N
 export debug=N
-
-export version=v4.3.4
 
 # This script has three optional arguments if run interactively.  WCOSS LSF 
 # (bsub) does not accept arguments in the LSF script, in that case, set up
@@ -67,25 +75,42 @@ fi
 if [ "$RUN_ENVIR" = dev ]; then        ### for dev 
 # ------------------------------------------------------
 # Most frequently made changes: 
-  export HOMEverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf_precip.$version
+  export HOMEverf_precip=/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/verf_precip.${verf_precip_ver}
   export PARMverf_precip=$HOMEverf_precip/parm
-  export DATAverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf.dat.$version
-  export bsubnext=N   # bsub verfgen24 and verfgen03?  
-# ------------------------------------------------------
+  export EXECverf_precip=$HOMEverf_precip/exec
+  export USHverf_precip=$HOMEverf_precip/ush
+  export UTLDEVverf_precip=$HOMEverf_precip/util.dev
+  export FIXverf_precip=$HOMEverf_precip/fix
+  export DATAverf_precip=/lfs/h2/emc/ptmp/$LOGNAME/verf.dat/${verf_precip_ver}
+  export COMIN1=$DATAverf_precip/precip
+#  export COMIN2=/lfs/h1/ops/canned/com/verf/v4.5/precip
+  export COMIN2=$COMIN1
+  export COMIN=$COMIN1
+  export COMOUT=/lfs/h2/emc/ptmp/$LOGNAME/verf.dat/${verf_precip_ver}/precip
+#  export COMIN=${COMIN:-$(compath.py $envir/$NET/$verf_precip_ver/$RUN)}
+#  export COMOUT=${COMOUT:-$(compath.py -o verf/$verf_precip_ver/precip)}
+  export COMINpcpanl=${COMINpcpanl:-$(compath.py prod/com/pcpanl/${pcpanl_ver})}
+  export SENDCOM=YES
+  export SENDSMS=NO
+  export SENDDBN=NO
+  export SENDRZDM=NO   # for daily side-by-side plots
+  export bsubnext=Y   # bsub verfgen24?  
+  echo $COMIN
+  echo $COMOUT
+  echo $COMINpcpanl
+  # ------------------------------------------------------
   # DATAROOT is NCO-speak for 'wrkdir'.
-  export DATAROOT=/gpfs/dell2/stmp/$LOGNAME/tmpnwprd
-# export vday=20160204
+  export DATAROOT=/lfs/h2/emc/stmp/$LOGNAME/tmpnwprd
+  export vday=20210824
 else                                   ### for prod/para/test
-  export HOMEverf_precip=/gpfs/dell1/nco/ops/nw${envir}/verf_precip.${version}
+  export HOMEverf_precip=/lfs/h1/ops/prod/packages/verf_precip.${verf_precip_ver}
 fi # end of 'is this dev?' 
 
 $HOMEverf_precip/jobs/JVERF_PRECIP_GETPPT
 
 
 if [ "$RUN_ENVIR" = dev ]; then  ### for dev only
-  userid=`whoami`
-  if [ $bsubnext = Y -a $cronmode = Y -a "$userid" = Ying.Lin ]; then
-    . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/dev/jverf_precip_verfgen_03h.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.verfgen03.out 2>&1
-    . ~/.bashrc > ~/cron.bashrc.out 2>&1; bsub < $HOMEverf_precip/ecf/dev/jverf_precip_verfgen_24h.ecf > /gpfs/dell2/ptmp/Ying.Lin/cron.out/cron.verfgen24.out 2>&1
+  if [ $bsubnext = Y ]; then
+#    qsub $HOMEverf_precip/ecf/dev/jverf_precip_verfgen_24h.ecf > /lfs/h2/emc/ptmp/Alicia.Bentley/cron.out/cron.verfgen24.out
   fi
 fi

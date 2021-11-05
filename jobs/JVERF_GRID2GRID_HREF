@@ -15,6 +15,7 @@ export SENDECF=${SENDECF:-YES}
 ###############################
 export NET=verf
 export RUN=href_apcp
+export RUN_TOO=precip
 
 ###############################################################
 # This block can be modified for different Production test
@@ -25,7 +26,6 @@ if [ "$RUN_ENVIR" = nco -o "$RUN_ENVIR" = para ]; then
     export SENDDBN=${SENDDBN:-NO}
     export DBNLOG=${DBNLOG:-YES}
     export DATA_IN=${DATA_IN:-$DATAROOT}
-    export COMSREF=${COMSREF:-$(compath.py sref/prod)/sref}
   fi
 
 fi
@@ -48,11 +48,6 @@ then
   . $HOMEverf_href/parm/verf_g2g_dev_config
 fi
 
-#if [ $SENDECF = YES ]
-#then
-#  ecflow_client --init=${ECF_RID}
-#fi
-#
 # ###################################
 # SET SHELL PROCESSING VARIABLES
 # ###################################
@@ -81,7 +76,6 @@ export jlogfile=${jlogfile:-${DATA}/jlogfile}
 export outid="LL$job"
 export jobid="${outid}.o${pid}"
 export pgmout="OUTPUT.${pid}"
-
 export cycle=t${cyc}z
 
 ##################################################
@@ -94,7 +88,7 @@ export SENDCOM=${SENDCOM:-YES}
 export SENDDBN=${SENDDBN:-YES}
 export SENDECF=${SENDECF:-YES}
 
-export HOMEverf_href=${HOMEverf_href:-${NWROOT}/verf_precip.${verf_precip_ver}}
+export HOMEverf_href=${HOMEverf_href:-${PACKAGEROOT}/verf_precip.${verf_precip_ver}}
 export EXECverf_g2g=${EXECverf_g2g:-$HOMEverf_href/exec}
 export FIXverf_g2g=${FIXverf_g2g:-$HOMEverf_href/fix}
 export PARMverf_g2g=${PARMverf_g2g:-$HOMEverf_href/parm}
@@ -113,37 +107,22 @@ export vday=${vday:-$PDYm2}
 ##################################
 # Define model input COMIN
 ##################################
-  export COMCCPA=${COMCCPA:-$(compath.py ccpa/prod)/ccpa}
-  export COMRAP=${COMRAP:-$(compath.py rap/prod)/rap}
-  export COMSREF=${COMSREF:-$(compath.py sref/prod)/sref}
-  export COMNAMNEST=${COMNAMNEST:-$(compath.py nam/prod)/nam}
-  export COMHIRESW=${COMHIRESW:-$(compath.py hiresw/prod)/hiresw}
-  export COMHREF=${COMHREF:-$(compath.py hiresw/prod)/href}
-  export COMNAM=${COMNAM:-$(compath.py nam/prod)/nam}
-  export COMMOSAIC=${COMMOSAIC:-$(compath.py hourly/prod)/radar}
-  export COMURMA=${COMURMA:-$(compath.py urma/prod)/urma2p5}
-  export COMBUFR=${COMBUFR:-$(compath.py hourly/prod)}
-  export COMGFS=${COMGFS:-$(compath.py gfs/prod)/gfs}
-  export COMHRRR=${COMHRRR:-$(compath.py hrrr/prod)/hrrr}
-  export COMGFSANL=${COMGFSANL:-$(compath.py gfs/prod)/gfs}
-  export COMGEFS=${COMGEFS:-$(compath.py gens/prod)/gefs}
-  export COMNDAS=${COMNDAS:-$(compath.py nam/prod)/ndas}
-  export COMNAEFS=${COMNAEFS:-$(compath.py naefs/prod)/cmce}
-  export AFWADIR=${AFWADIR:-$DCOMROOT}
-  export CLAVRDIR=${CLAVRDIR:-$DCOMROOT}
+  export COMCCPA=${COMCCPA:-$(compath.py $envir/com/ccpa/${ccpa_ver}/ccpa)}
+  export COMHREF=${COMHREF:-$(compath.py $envir/com/href/${href_ver}/href)}
+  export COMNAM=${COMNAM:-$(compath.py $envir/com/nam/${nam_ver}/nam)}
 
 ##################################
 # Define COMIN/COMOUT variables
 ##################################
-export COM_IN=${COM_IN:-$COMROOT/verf/${envir}}
-export COM_OUT=${COM_OUT:-$COMROOT/verf/${envir}}
+export COM_IN=${COM_IN:-$(compath.py -o ${NET}/${verf_precip_ver})}
+export COM_OUT=${COM_OUT:-$(compath.py -o ${NET}/${verf_precip_ver})}
 
 export FCSTDIR=${FCSTDIR:-$COM_OUT/${RUN}}
 export OBSVDIR=${OBSVDIR:-$COM_OUT/${RUN}}
 
 export COMIN=$COM_IN/${RUN}.$vday
 export COMOUT=$COM_OUT/${RUN}.$vday
-export COMVSDB=${COMVSDB:-$COMROOT/verf/${envir}/vsdb/precip}
+export COMVSDB=${COMVSDB:-$(compath.py -o ${NET}/${verf_precip_ver}/vsdb/${RUN_TOO})}
 
 # $COMVSDB/${model} made in ush/verf_g2g_run_href.sh
 mkdir -p -m 775 $COMOUT $COMVSDB

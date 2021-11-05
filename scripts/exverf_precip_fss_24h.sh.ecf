@@ -18,7 +18,7 @@ vyear=`echo $vday | cut -c 1-4`
 export vacc=24
 
 ccpafile=ccpa.${vday}12.24h
-cp $COMOUT.${vday}/$ccpafile .
+cp $COMIN.${vday}/$ccpafile .
 
 err=$?
 if [ $err -ne 0 ]; then

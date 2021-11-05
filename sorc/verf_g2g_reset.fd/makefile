@@ -5,7 +5,7 @@
 #  OS: Intel WCOSS
 #
 
-FC=     ifort
+FC=     ${COMP}
 INC= ${G2_INC4}
 
 BINDIR= ../../exec

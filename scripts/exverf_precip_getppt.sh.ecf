@@ -76,8 +76,8 @@ typeset -R3 -Z fhr3
 # The others (JMA, METFR, UKMO) can be fed to brkout_fcst directly
 #########################################################################
 
-export ICOM=$DCOMROOT/prod/$day/qpf_verif
-export ICOMm1=$DCOMROOT/prod/$daym1/qpf_verif
+export ICOM=$DCOMROOT/$day/qpf_verif
+export ICOMm1=$DCOMROOT/$daym1/qpf_verif
 
 # Create 'import' directory to store re-named ECMWF files and cnvgrib'd UKMO
 # files:

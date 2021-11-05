@@ -1,22 +1,29 @@
 #!/bin/bash
-#BSUB -J jverf_precip_verfgen03
-#BSUB -o /gpfs/dell2/ptmp/Ying.Lin/cron.out/verfgen03.%J
-#BSUB -e /gpfs/dell2/ptmp/Ying.Lin/cron.out/verfgen03.%J
-#BSUB -n 1
-#BSUB -q "dev"
-#BSUB -W 2:00
-#BSUB -P VERF-T2O
-#BSUB -R span[ptile=1]
+#PBS -N jverf_precip_verfgen03
+#PBS -o /lfs/h2/emc/ptmp/Alicia.Bentley/cron.out/verfgen03.out
+#PBS -e /lfs/h2/emc/ptmp/Alicia.Bentley/cron.out/verfgen03.err
+#PBS -l select=1:ncpus=2:mem=1GB
+#PBS -q dev
+#PBS -l walltime=02:00:00
+#PBS -A VERF-DEV
 
 # why 'BSUB -L /bin/sh' above: this job is bsub'd at the end of GETPPT.
 # 'BSUB -L login_shell ensures that variables exported by GETPPT (e.g. vday)
 # will not be propagated to the environment of verfgen_03h.  
 set -x
+source /lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/verf_precip/versions/run.ver
 module purge
-module load ips/18.0.5.274    # for prod_util
-module load prod_util/1.1.3
-module load prod_envir/1.0.3
-module load grib_util/1.1.1
+module load envvar/${envvar_ver}
+module load intel/${intel_ver}
+module load PrgEnv-intel/${PrgEnvintel_ver}
+module load craype/${craype_ver}
+module load cray-mpich/${craympich_ver}
+module load cray-pals/${craypals_ver}
+module load prod_util/${prod_util_ver}
+module load prod_envir/${prod_envir_ver}
+module load libjpeg/${libjpeg_ver}
+module load grib_util/${grib_util_ver}
+module load wgrib2/${wgrib2_ver}
 
 export envir=dev
 export cyc=00
@@ -25,8 +32,6 @@ export job=verf_precip_verfgen_03h
 export RUN_ENVIR=dev
 export retro=N
 export debug=N
-
-export version=v4.3.2
 
 # This script has three optional arguments if run interactively.  WCOSS LSF 
 # (bsub) does not accept arguments in the LSF script, in that case, set up
@@ -60,19 +65,42 @@ fi
 if [ "$RUN_ENVIR" = dev ]; then        ### for dev 
 # ------------------------------------------------------
 # Most frequently made changes: 
-  export COMCCPA=`compath.py ccpa/prod`/ccpa
-  export NOSCRUB=/gpfs/dell2/emc/verification/noscrub/Ying.Lin
-  export HOMEverf_precip=$NOSCRUB/verf_precip
-  export PARMverf_precip=$HOMEverf_precip/parm.dev
-  export DATAverf_precip=/gpfs/dell2/ptmp/$LOGNAME/verf.dat
-  export COMVSDB=$DATAverf_precip/vsdb
+  export NOSCRUB=/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley
+  export HOMEverf_precip=$NOSCRUB/verf_precip.${verf_precip_ver}
+  export PARMverf_precip=$HOMEverf_precip/parm
+  export EXECverf_precip=$HOMEverf_precip/exec
+  export USHverf_precip=$HOMEverf_precip/ush
+  export UTLDEVverf_precip=$HOMEverf_precip/util.dev
+  export FIXverf_precip=$HOMEverf_precip/fix
+#  export DATAverf_precip=/lfs/h2/emc/ptmp/$LOGNAME/verf.dat/${verf_precip_ver}
+  export DATAverf_precip=/lfs/h1/ops/canned/com/verf/v4.5
+  export COMIN1=$DATAverf_precip/precip
+  export COMIN2=$COMIN1
+  export COMIN=$COMIN1
+  export COMOUT=/lfs/h2/emc/ptmp/$LOGNAME/verf.dat/${verf_precip_ver}/precip
+#  export COMIN=${COMIN:-$(compath.py $envir/$NET/$verf_precip_ver/$RUN)}
+#  export COMOUT=${COMOUT:-$(compath.py -o verf/$verf_precip_ver/precip)}
+  export COMVSDB=/lfs/h2/emc/ptmp/$LOGNAME/verf.dat/${verf_precip_ver}/vsdb
+  export COMINpcpanl=${COMINpcpanl:-$(compath.py prod/com/pcpanl/${pcpanl_ver})}
+  export SENDCOM=YES
+  export SENDSMS=NO
+  export SENDDBN=NO
+  export SENDRZDM=NO   # for daily side-by-side plots
+  echo $COMIN
+  echo $COMOUT
+  echo $COMINpcpanl
+  # Location of the 45-day rotating archive:
+  export ARCH45DAY=$NOSCRUB/hold45days
 # ------------------------------------------------------
   # DATAROOT is NCO-speak for 'wrkdir'.
-  export DATAROOT=/gpfs/dell2/stmp/$LOGNAME/tmpnwprd
-# export vday=20160207 
-  export ARCH45DAY=$NOSCRUB/hold45days
+  export DATAROOT=/lfs/h2/emc/stmp/$LOGNAME/tmpnwprd
+  export vday=20211007 
+  #CCPA= /lfs/h1/ops/canned/com/ccpa
+  #  export COMCCPA=`compath.py $envir/com/ccpa/${ccpa_ver}/ccpa`
+  export COMCCPA=${COMCCPA:-$(compath.py prod/com/ccpa/${ccpa_ver}/ccpa)}  
+  echo "COMCCPA is: $COMCCPA" 
 else                                   ### for prod/para/test
-  export HOMEverf_precip=/gpfs/dell1/nco/ops/nw${envir}/verf_precip.${version}
+  export HOMEverf_precip=/lfs/h1/ops/${envir}/packages/verf_precip.${verf_precip_ver}
 fi # end of 'is this dev?' 
 
 $HOMEverf_precip/jobs/JVERF_PRECIP_VERFGEN_03H

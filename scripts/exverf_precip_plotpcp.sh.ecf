@@ -58,7 +58,7 @@ if [ $domain = conus ]; then
         tar xvf $prodplottar
       else
         # If the file has not been synched to dev:
-        scp Ying.Lin@${PRODWCOSS}:$prodplottar .
+        scp Alicia.Bentley@${PRODWCOSS}:$prodplottar .
         mv pcpplot_${vday}12.tar pcpplot_prod_${vday}12.tar
         tar xvf pcpplot_prod_${vday}12.tar
       fi
@@ -176,7 +176,7 @@ if [ $RUN_ENVIR = dev -a $machine = wcoss ]; then
   cp $CPCDIR/PRCP_CU_GAUGE_V1.0GLB_0.25deg.lnx.$vday.RT cpcfile.$vday
   err=$?
   if [ $err -ne 0 ]; then
-    scp Ying.Lin@${PRODWCOSS}:$CPCDIR/PRCP_CU_GAUGE_V1.0GLB_0.25deg.lnx.$vday.RT cpcfile.$day
+    scp Alicia.Bentley@${PRODWCOSS}:$CPCDIR/PRCP_CU_GAUGE_V1.0GLB_0.25deg.lnx.$vday.RT cpcfile.$day
   fi 
 
   if [ $domain = conus ]; then
@@ -241,7 +241,7 @@ else
 fi
 
 # Put the tar file on 45-day rotating archive:
-if [ $RUN_ENVIR = dev -a $LOGNAME = "Ying.Lin" -a $machine = wcoss -a "$ARCH45DAY" != "" ]
+if [ $RUN_ENVIR = dev -a $LOGNAME = "Alicia.Bentley" -a $machine = wcoss -a "$ARCH45DAY" != "" ]
 then
   if [ ! -d $ARCH45DAY ]; then mkdir -p $ARCH45DAY; fi
   cp $COMOUT/pcpplot_${vdate}*.tar $ARCH45DAY/.

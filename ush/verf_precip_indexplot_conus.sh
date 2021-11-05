@@ -76,6 +76,10 @@ EOF
   done
 done
 
+#This is not done in ops, all of this script is only done in dev
+#Will need to uncomment this and figure of the new st4 path after code delivery to NCO
+#cp /gpfs/dell2/nco/ops/com/pcpanl/prod/pcpanl.$vday/st4_conus.${vday}12.24h.gif ./st4.${vday}12.24h.gif
+
 # For my own dev job, copy over a blank GIF file as placeholder for the CCPA
 # gif; do the same thing for NOHRSC png.  Later util.dev/trans_send2rzdm.ksh 
 # will do an "ssh" on emcrzdm to copy over the actual ccpa 24h gif from 
@@ -91,11 +95,11 @@ done
 #   plot on or off - no need to change the util.dev/trans_send2rzdm.ksh
 #
 # 2018/09/07: reactivated the inclusion of the nohrsc plot
-if [ $RUN_ENVIR = dev -a $LOGNAME = "Ying.Lin" -a $machine = wcoss ]; 
+if [ $RUN_ENVIR = dev -a $LOGNAME = "Alicia.Bentley" -a $machine = wcoss ]; 
 then
-  cp /meso/save/Ying.Lin/utils/blankplt.gif ccpa_${vday}12_24h.gif
+  cp /meso/save/Alicia.Bentley/utils/blankplt.gif ccpa_${vday}12_24h.gif
   #reactivate when nohrsc data becomes available
-  cp /meso/save/Ying.Lin/utils/blankplt.png nohrsc_${vday}12_24h.png
+  cp /meso/save/Alicia.Bentley/utils/blankplt.png nohrsc_${vday}12_24h.png
 fi
 
 for prefix in st2ml rtma mrms_gc mrms_gc_para mrms_mm cpcuni_na
