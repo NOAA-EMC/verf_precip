@@ -9,7 +9,7 @@
 #   note that the 18Z analysis would be made/remade a day later than 00/06/12Z,
 #   
 # Log history: 
-#    2015-06-29 Copied over from exverf_precip_fss_24h.sh.ecf
+#    2015-06-29 Copied over from exverf_precip_fss_24h.sh
 ###############################################################################
 set -x
 

@@ -170,7 +170,7 @@ fi
 
 #######################################################################
 # Execute the script.
-$HOMEverf_precip/scripts/exverf_precip_getppt.sh.ecf
+$HOMEverf_precip/scripts/exverf_precip_getppt.sh
 #######################################################################
 
 msg="JOB $job HAS COMPLETED NORMALLY."

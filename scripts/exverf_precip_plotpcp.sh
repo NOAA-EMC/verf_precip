@@ -1,6 +1,6 @@
 #!/bin/ksh
 ###############################################################################
-# Name of Script: exverf_precip_plotdata.sh.ecf
+# Name of Script: exverf_precip_plotdata.sh
 # Purpose of Script: to plot the model precip data using GEMPAK
 #
 # History:

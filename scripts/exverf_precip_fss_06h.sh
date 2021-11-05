@@ -11,14 +11,14 @@
 #   1) make a list of fss06 domain parm files that contain only those 
 #      models to be verified for this 06h FSS job
 #   2) Remove existing 06h FSS records from model_$vday.vsdb
-#   3) Submit POE job (using exverf_precip_fss_06h_poe.sh.ecf as basis for
+#   3) Submit POE job (using exverf_precip_fss_06h_poe.sh as basis for
 #      POE script)
 #   4) For each model, assemble the individual pieces of VSDBs into a single
 #      fss06 vsdb file, then add it to the existing model_$vday.vsdb in the
 #      VSDB directory.  
 # 
 # Log history: 
-#    2015-06-29 Copied over from exverf_precip_fss_24h.sh.ecf
+#    2015-06-29 Copied over from exverf_precip_fss_24h.sh
 ###############################################################################
 set -x
 
@@ -68,7 +68,7 @@ vhours="00 06 12 18"
 
 for vhr in $vhours
 do
-  echo $HOMEverf_precip/scripts/exverf_precip_fss_06h_poe.sh.ecf $vhr >> $DATA/poescript
+  echo $HOMEverf_precip/scripts/exverf_precip_fss_06h_poe.sh $vhr >> $DATA/poescript
 done
 
 echo 

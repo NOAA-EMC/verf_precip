@@ -170,7 +170,7 @@ fi
 #######################################################################
 
 # Execute the script.
-$HOMEverf_precip/scripts/exverf_precip_fss_24h.sh.ecf 
+$HOMEverf_precip/scripts/exverf_precip_fss_24h.sh 
 
 #######################################################################
 

@@ -1,6 +1,6 @@
 #PBS -N verf_grid2grid_href_apcp_%CYC%
 #PBS -j oe
-#PBS -S /bin/sh
+#PBS -S /bin/bash
 #PBS -q %QUEUE%_shared
 #PBS -A %PROJ%-%PROJENVIR%
 #PBS -l walltime=01:30:00

@@ -131,7 +131,7 @@ env
 
 #######################################################################
 # Execute the script.
-sh $HOMEverf_href/scripts/exverf_g2g_href_APCP.sh.ecf $vday
+sh $HOMEverf_href/scripts/exverf_g2g_href_APCP.sh $vday
 
 msg="JOB $job HAS COMPLETED NORMALLY."
 postmsg "$jlogfile" "$msg"

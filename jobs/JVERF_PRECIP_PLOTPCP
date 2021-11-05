@@ -58,7 +58,7 @@ then
   export SENDDBN=NO
   # Don't delete the working directory if this is a regular, bsub'd run, 
   #   (cronmode = Y), since when cronmode = Y, util.dev/trans_send2rzdm.ksh
-  #   is bsub'd by scripts/exverf_precip_plotpcp.sh.ecf and needs the plots
+  #   is bsub'd by scripts/exverf_precip_plotpcp.sh and needs the plots
   #   and index.html contained in this working directory.
   if [ $cronmode = N -a $debug = N ]; then
     KEEPDATA=NO
@@ -172,7 +172,7 @@ env
 echo 'Actual output starts here:'
 
 #######################################################################
-$HOMEverf_precip/scripts/exverf_precip_plotpcp.sh.ecf 
+$HOMEverf_precip/scripts/exverf_precip_plotpcp.sh
 #######################################################################
 
 cat $pgmout

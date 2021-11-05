@@ -181,7 +181,7 @@ fi
 
 #######################################################################
 
-$HOMEverf_precip/scripts/exverf_precip_fss_06h.sh.ecf
+$HOMEverf_precip/scripts/exverf_precip_fss_06h.sh
 
 #######################################################################
 

@@ -7,7 +7,7 @@ The output  are unified ensemble VSDB files based on which sevral major ensemble
 scores can be generated (i.e. from MetViewer).
 
 The running job script is JVERF_GRID2GRID_HREF (in jobs sub-directory), which sets operational
-paths and running environment;  then trigger the script exverf_g2g_href_APCP.sh.ecf (in scripts)
+paths and running environment;  then trigger the script exverf_g2g_href_APCP.sh (in scripts)
 to do following tasks:
 
    (1) Parapare and obtain necessary HREF, CCAp and NAMnest APCP input data files

@@ -171,7 +171,7 @@ fi
 
 #######################################################################
 # Execute the script.
-$HOMEverf_precip/scripts/exverf_precip_verfgen_$vhour.sh.ecf
+$HOMEverf_precip/scripts/exverf_precip_verfgen_$vhour.sh
 #######################################################################
 cat $pgmout
 msg="JOB $job HAS COMPLETED NORMALLY."

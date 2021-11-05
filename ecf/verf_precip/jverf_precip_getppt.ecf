@@ -1,6 +1,6 @@
 #PBS -N verf_precip_getppt_%CYC%
 #PBS -j oe
-#PBS -S /bin/sh
+#PBS -S /bin/bash
 #PBS -q %QUEUE%_shared
 #PBS -A %PROJ%-%PROJENVIR%
 #PBS -l walltime=02:00:00

@@ -2,7 +2,7 @@
 set -x
 
 # This script is the intermediate step between 
-#  scripts/exverf_precip_verfgen_24h.sh.ecf
+#  scripts/exverf_precip_verfgen_24h.sh
 # and
 #  ush/verf_precip_verf24.sh
 # For each item in verf_precip_verf24.domains, this script prepares arguments

@@ -193,11 +193,11 @@ fi
 #######################################################################
 
 # Execute the script.
-$HOMEverf_precip/scripts/exverf_precip_verfgen_$vhour.sh.ecf 
+$HOMEverf_precip/scripts/exverf_precip_verfgen_$vhour.sh 
 
 # Process QC'd 24h gauges: 
 #if [ $domain = conus ]; then
-#  $HOMEverf_precip/scripts/exverf_precip_g2p_qcdlygauges.sh.ecf 
+#  $HOMEverf_precip/scripts/exverf_precip_g2p_qcdlygauges.sh 
 #fi
 #######################################################################
 
