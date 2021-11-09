@@ -37,7 +37,7 @@ if [ $domain = conus ]; then
   tar xvf $COMIN/modpcpsum.$vday.gz
 
   # 2018/07/19: dev: get ukmo from prod modpcpsum, to plot with python.  
-  prdmodpcpsum=${COMIN}.$vday/modpcpsum.$vday.gz
+  prdmodpcpsum=${COMIN}/modpcpsum.$vday.gz
   if [ $RUN_ENVIR = dev ]; then 
     tar xvf $prdmodpcpsum `tar tf $prdmodpcpsum | grep ukmo`
   fi

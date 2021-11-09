@@ -11,7 +11,7 @@
 # 'BSUB -L login_shell ensures that variables exported by GETPPT (e.g. vday)
 # will not be propagated to the environment of verfgen_03h.  
 set -x
-source /lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/verf_precip/versions/run.ver
+source /lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/verf_precip.v4.5.0/versions/run.ver
 module purge
 module load envvar/${envvar_ver}
 module load intel/${intel_ver}

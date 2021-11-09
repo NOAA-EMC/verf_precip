@@ -60,7 +60,7 @@ then
   #   (cronmode = Y), since when cronmode = Y, util.dev/trans_send2rzdm.ksh
   #   is bsub'd by scripts/exverf_precip_plotpcp.sh and needs the plots
   #   and index.html contained in this working directory.
-  if [ $cronmode = N -a $debug = N ]; then
+  if [ $debug = N ]; then
     KEEPDATA=NO
   else
     KEEPDATA=YES
