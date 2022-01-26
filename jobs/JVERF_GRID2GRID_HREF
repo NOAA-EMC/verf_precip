@@ -13,7 +13,7 @@ export SENDECF=${SENDECF:-YES}
 ###############################
 # Specify RUN name
 ###############################
-export NET=verf
+export NET=verf_precip
 export RUN=href_apcp
 export RUN_TOO=precip
 
@@ -59,23 +59,14 @@ date
 ###########################################################
 export pid=$$
 export DATA_IN=${DATA_IN:-$DATAROOT}
-export DATA=$DATA_IN/verf_g2g_href_APCP_${cyc}_${envir}.$$
+#export DATA=$DATA_IN/verf_g2g_href_APCP_${cyc}_${envir}.$$
+export DATA=$DATA_IN/$jobid
 
 rm -rf $DATA
 mkdir -p $DATA
 cd $DATA
 
-####################################
-# File To Log Msgs
-####################################
-export jlogfile=${jlogfile:-${DATA}/jlogfile}
-
-####################################
-# Determine Job Output Name on System
-####################################
-export outid="LL$job"
-export jobid="${outid}.o${pid}"
-export pgmout="OUTPUT.${pid}"
+export pgmout="OUTPUT.$$"
 export cycle=t${cyc}z
 
 ##################################################
@@ -122,7 +113,7 @@ export OBSVDIR=${OBSVDIR:-$COM_OUT/${RUN}}
 
 export COMIN=$COM_IN/${RUN}.$vday
 export COMOUT=$COM_OUT/${RUN}.$vday
-export COMVSDB=${COMVSDB:-$(compath.py -o ${NET}/${verf_precip_ver}/vsdb/${RUN_TOO})}
+export COMVSDB=${COMVSDB:-$(compath.py -o ${NET}/${verf_precip_ver}/vsdb)}
 
 # $COMVSDB/${model} made in ush/verf_g2g_run_href.sh
 mkdir -p -m 775 $COMOUT $COMVSDB

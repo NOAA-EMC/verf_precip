@@ -62,28 +62,17 @@ fi
 ###########################################################
 # obtain unique process id (pid) and make temp directories
 ###########################################################
-export pid=$$
-export DATA=$DATAROOT/${job}.${pid}
+export DATA=$DATAROOT/${jobid}
 mkdir -p $DATA
 cd $DATA 
 
-####################################
-# File To Log Msgs
-####################################
-export jlogfile=${jlogfile:-${DATA}/jlogfile}
-
-####################################
-# Determine Job Output Name on System
-####################################
-export outid="LL$job"
-export jobid="${outid}.o${pid}"
-export pgmout="OUTPUT.${pid}"
+export pgmout="OUTPUT.$$"
 export cycle=t${cyc}z 
 
 ###############################
 # Specify NET and RUN name
 ###############################
-export NET=verf
+export NET=verf_precip
 export RUN=precip
 
 ################################################################
@@ -149,7 +138,7 @@ export COMIN=${COMIN:-$(compath.py -o ${NET}/${verf_precip_ver}/${RUN})}
 export COMIN1=${COMIN}
 export COMIN2=${COMIN}
 export COMOUT=${COMOUT:-$(compath.py -o ${NET}/${verf_precip_ver}/${RUN})}
-export COMVSDB=${COMVSDB:-$(compath.py -o ${NET}/${verf_precip_ver}/vsdb/${RUN})}
+export COMVSDB=${COMVSDB:-$(compath.py -o ${NET}/${verf_precip_ver}/vsdb)}
 export COMINpcpanl=${COMINpcpanl:-$(compath.py $envir/com/pcpanl/${pcpanl_ver})}
 # COMCCPA is a prefix, not directory name.  Directory is
 #   $(compath.py ccpa/prod)/ccpa.yyyymmdd

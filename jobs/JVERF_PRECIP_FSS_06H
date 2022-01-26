@@ -41,6 +41,7 @@ export region=CNS # ConUS
 #################################################################
 
 # export VERFANL so fss.f knows what analysis to put into the VSDB record.
+export VERFANL=${VERFANL:-CCPA}
 if [ "$RUN_ENVIR" = dev ]    ### For Developers
 then
   # PARMverf_precip is set in the ecf/sms script.  It is either 'parm' or
@@ -70,27 +71,17 @@ fi
 # obtain unique process id (pid) and make temp directories
 ###########################################################
 export pid=$$
-export DATA=$DATAROOT/${job}.${pid}
+export DATA=$DATAROOT/${jobid}
 mkdir -p $DATA
 cd $DATA 
 
-####################################
-# File To Log Msgs
-####################################
-export jlogfile=${jlogfile:-${DATA}/jlogfile}
-
-####################################
-# Determine Job Output Name on System
-####################################
-export outid="LL$job"
-export jobid="${outid}.o${pid}"
-export pgmout="OUTPUT.${pid}"
+export pgmout="OUTPUT.$$"
 export cycle=t${cyc}z 
 
 ###############################
 # Specify NET and RUN name
 ###############################
-export NET=verf
+export NET=verf_precip
 export RUN=precip
 
 ################################################################
@@ -142,7 +133,7 @@ export vday=${vday:-$PDYm9}
 #################################################
 export COMIN=${COMIN:-$(compath.py -o ${NET}/${verf_precip_ver}/${RUN})}
 export COMOUT=${COMOUT:-$(compath.py -o ${NET}/${verf_precip_ver}/${RUN})}
-export COMVSDB=${COMVSDB:-$(compath.py -o ${NET}/${verf_precip_ver}/vsdb/${RUN})}
+export COMVSDB=${COMVSDB:-$(compath.py -o ${NET}/${verf_precip_ver}/vsdb)}
 export COMINpcpanl=${COMINpcpanl:-$(compath.py $envir/com/pcpanl/${pcpanl_ver})}
 # COMCCPA is a prefix, not directory name.  Directory is
 #   $(compath.py ccpa/prod)/ccpa.yyyymmdd
@@ -154,8 +145,8 @@ export DCOM=${DCOM:-$DCOMROOT}
 # 
 if [ ! "$RUN_ENVIR" = dev ]    
 then
-  export COMIN1=$COMIN1
-  export COMIN2=$COMIN2
+  export COMIN1=$COMIN
+  export COMIN2=$COMIN
 fi
 
 if [ ! -d $COMVSDB ]; then

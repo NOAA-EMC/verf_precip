@@ -2,11 +2,10 @@
 set -x
 
 source ../versions/build.ver
-module purge
+module reset
 
 export COMP=ftn
 
-module load envvar/${envvar_ver}
 module load intel/${intel_ver}
 module load PrgEnv-intel/${PrgEnvintel_ver}
 module load craype/${craype_ver}

@@ -45,63 +45,63 @@
 #####################################################################################################
 # model|convert|cgd|grd|input file          |output file prefix          |  cycles | shour | ehour | interval |
 #======================================================================================================================
-gec00|      |   |000|/lfs/h1/ops/canned/com/gefs/v12.2/gefs._DAY_/%{cyc}%/atmos/pgrb2sp25/gec00.t%{cyc}%z.pgrb2s.0p25.f0%{fhr}%|_DAY_/gec00_|00 06 12 18|06|84|06|06|grb2
-gfs3h|      |   |000|/lfs/h1/ops/canned/com/gfs/v16.2/gfs._DAY_/%{cyc}%/atmos/gfs.t%{cyc}%z.pgrb2.0p25.f%{fhr}%|_DAY_/gfs_|00 06 12 18|03|180|03|03|grb2
-gfs6h|      |   |000|/lfs/h1/ops/canned/com/gfs/v16.2/gfs._DAY_/%{cyc}%/atmos/gfs.t%{cyc}%z.pgrb2.0p25.f%{fhr}%|_DAY_/gfs_|00 06 12 18|03|180|03|06|grb2
-wgnegfs|      |   |000|/lfs/h1/ops/canned/com/gfs/v16.2/gfs._DAY_/%{cyc}%/atmos/gfs.t%{cyc}%z.pgrb2.0p25.f%{fhr}%|_DAY_/wgnegfs_|00 06 12 18|03|180|03|999|grb2
-nam|          |   |000|/lfs/h1/ops/canned/com/nam/v4.2/nam._DAY_/nam.t%{cyc}%z.bgrdsf%{fhr}%.tm00|_DAY_/nam_|00 06 12 18|03|84|03|888|grb2
-conusnest|     |   |000|/lfs/h1/ops/canned/com/nam/v4.2/nam._DAY_/nam.t%{cyc}%z.conusnest.hiresf%{fhr}%.tm00.grib2|_DAY_/conusnest_|00 06 12 18|03|60|03|03|grb2
-conusarw|      |   |000|/lfs/h1/ops/canned/com/hiresw/v8.1/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.conus.grib2|_DAY_/conusarw_|00 12|03|48|03|03|grb2
-conusarw2|      |   |000|/lfs/h1/ops/canned/com/hiresw/v8.1/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.conusmem2.grib2|_DAY_/conusarw2_|00 12|03|48|03|03|grb2
-conusfv3|     |   |000|/lfs/h1/ops/canned/com/hiresw/v8.1/hiresw._DAY_/hiresw.t%{cyc}%z.fv3_5km.f%{fhr}%.conus.grib2|_DAY_/conusfv3_|00 12|01|60|01|01|grb2
-akarw|      |   |000|/lfs/h1/ops/canned/com/hiresw/v8.1/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.ak.grib2|_DAY_/akarw_|06 18|03|48|03|03|grb2
-akarw2|      |   |000|/lfs/h1/ops/canned/com/hiresw/v8.1/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.akmem2.grib2|_DAY_/akarw2_|06 18|03|48|03|03|grb2
-akfv3|      |   |000|/lfs/h1/ops/canned/com/hiresw/v8.1/hiresw._DAY_/hiresw.t%{cyc}%z.fv3_5km.f%{fhr}%.ak.grib2|_DAY_/akfv3_|06 18|01|60|01|01|grb2
-hiarw|      |   |000|/lfs/h1/ops/canned/com/hiresw/v8.1/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.hi.grib2|_DAY_/hiarw_|00 12|03|48|03|03|grb2
-hiarw2|      |   |000|/lfs/h1/ops/canned/com/hiresw/v8.1/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.himem2.grib2|_DAY_/hiarw2_|00 12|03|48|03|03|grb2
-hifv3|      |   |000|/lfs/h1/ops/canned/com/hiresw/v8.1/hiresw._DAY_/hiresw.t%{cyc}%z.fv3_5km.f%{fhr}%.hi.grib2|_DAY_/hifv3_|00 12|01|60|01|01|grb2
-prarw|      |   |000|/lfs/h1/ops/canned/com/hiresw/v8.1/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.pr.grib2|_DAY_/prarw_|06 18|03|48|03|03|grb2
-prarw2|      |   |000|/lfs/h1/ops/canned/com/hiresw/v8.1/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.prmem2.grib2|_DAY_/prarw2_|06 18|03|48|03|03|grb2
-prfv3|      |   |000|/lfs/h1/ops/canned/com/hiresw/v8.1/hiresw._DAY_/hiresw.t%{cyc}%z.fv3_5km.f%{fhr}%.pr.grib2|_DAY_/prfv3_|06 18|01|60|01|01|grb2
+gec00|      |   |000|/lfs/h1/ops/canned/com/gefs/_verGEFS_/gefs._DAY_/%{cyc}%/atmos/pgrb2sp25/gec00.t%{cyc}%z.pgrb2s.0p25.f0%{fhr}%|_DAY_/gec00_|00 06 12 18|06|84|06|06|grb2
+gfs3h|      |   |000|/lfs/h1/ops/canned/com/gfs/_verGFS_/gfs._DAY_/%{cyc}%/atmos/gfs.t%{cyc}%z.pgrb2.0p25.f%{fhr}%|_DAY_/gfs_|00 06 12 18|03|180|03|03|grb2
+gfs6h|      |   |000|/lfs/h1/ops/canned/com/gfs/_verGFS_/gfs._DAY_/%{cyc}%/atmos/gfs.t%{cyc}%z.pgrb2.0p25.f%{fhr}%|_DAY_/gfs_|00 06 12 18|03|180|03|06|grb2
+wgnegfs|      |   |000|/lfs/h1/ops/canned/com/gfs/_verGFS_/gfs._DAY_/%{cyc}%/atmos/gfs.t%{cyc}%z.pgrb2.0p25.f%{fhr}%|_DAY_/wgnegfs_|00 06 12 18|03|180|03|999|grb2
+nam|          |   |000|/lfs/h1/ops/canned/com/nam/_verNAM_/nam._DAY_/nam.t%{cyc}%z.bgrdsf%{fhr}%.tm00|_DAY_/nam_|00 06 12 18|03|84|03|888|grb2
+conusnest|     |   |000|/lfs/h1/ops/canned/com/nam/_verNAM_/nam._DAY_/nam.t%{cyc}%z.conusnest.hiresf%{fhr}%.tm00.grib2|_DAY_/conusnest_|00 06 12 18|03|60|03|03|grb2
+conusarw|      |   |000|/lfs/h1/ops/canned/com/hiresw/_verHIRESW_/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.conus.grib2|_DAY_/conusarw_|00 12|03|48|03|03|grb2
+conusarw2|      |   |000|/lfs/h1/ops/canned/com/hiresw/_verHIRESW_/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.conusmem2.grib2|_DAY_/conusarw2_|00 12|03|48|03|03|grb2
+conusfv3|     |   |000|/lfs/h1/ops/canned/com/hiresw/_verHIRESW_/hiresw._DAY_/hiresw.t%{cyc}%z.fv3_5km.f%{fhr}%.conus.grib2|_DAY_/conusfv3_|00 12|01|60|01|01|grb2
+akarw|      |   |000|/lfs/h1/ops/canned/com/hiresw/_verHIRESW_/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.ak.grib2|_DAY_/akarw_|06 18|03|48|03|03|grb2
+akarw2|      |   |000|/lfs/h1/ops/canned/com/hiresw/_verHIRESW_/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.akmem2.grib2|_DAY_/akarw2_|06 18|03|48|03|03|grb2
+akfv3|      |   |000|/lfs/h1/ops/canned/com/hiresw/_verHIRESW_/hiresw._DAY_/hiresw.t%{cyc}%z.fv3_5km.f%{fhr}%.ak.grib2|_DAY_/akfv3_|06 18|01|60|01|01|grb2
+hiarw|      |   |000|/lfs/h1/ops/canned/com/hiresw/_verHIRESW_/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.hi.grib2|_DAY_/hiarw_|00 12|03|48|03|03|grb2
+hiarw2|      |   |000|/lfs/h1/ops/canned/com/hiresw/_verHIRESW_/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.himem2.grib2|_DAY_/hiarw2_|00 12|03|48|03|03|grb2
+hifv3|      |   |000|/lfs/h1/ops/canned/com/hiresw/_verHIRESW_/hiresw._DAY_/hiresw.t%{cyc}%z.fv3_5km.f%{fhr}%.hi.grib2|_DAY_/hifv3_|00 12|01|60|01|01|grb2
+prarw|      |   |000|/lfs/h1/ops/canned/com/hiresw/_verHIRESW_/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.pr.grib2|_DAY_/prarw_|06 18|03|48|03|03|grb2
+prarw2|      |   |000|/lfs/h1/ops/canned/com/hiresw/_verHIRESW_/hiresw._DAY_/hiresw.t%{cyc}%z.arw_5km.f%{fhr}%.prmem2.grib2|_DAY_/prarw2_|06 18|03|48|03|03|grb2
+prfv3|      |   |000|/lfs/h1/ops/canned/com/hiresw/_verHIRESW_/hiresw._DAY_/hiresw.t%{cyc}%z.fv3_5km.f%{fhr}%.pr.grib2|_DAY_/prfv3_|06 18|01|60|01|01|grb2
 ecmwf|convert  |228|000|import/UWD._DAYm1_12.%{fhr}%|_DAYm1_/ecmwf_|12|24|72|24|
 jma|convert    |   |000|/lfs/h1/ops/canned/dcom/_DAY_/qpf_verif/jma__DAY_%{cyc}%00.grib|_DAY_/jma_|00 12|06|84|06|
 metfr|   |   |000|/lfs/h1/ops/canned/dcom/_DAYm1_/qpf_verif/METFRA_%{cyc}%__DAYm1_|_DAYm1_/metfr_|00 12|12|84|12|
 ukmo|convert |255|000|import/ukmo._DAY_%{cyc}%.grb1|_DAY_/ukmo_|00 12|12|96|12|
-rap|   |   |000|/lfs/h1/ops/canned/com/rap/v5.1/rap._DAY_/rap.t%{cyc}%z.awip32f%{fhr}%.grib2|_DAY_/rap_|03 09 15 21|01|51|01|01|grb2
-rap|   |   |000|/lfs/h1/ops/canned/com/rap/v5.1/rap._DAY_/rap.t%{cyc}%z.awip32f%{fhr}%.grib2|_DAY_/rap_|00 06 12 18|01|21|01|01|grb2
-hrrr|   |   |000|/lfs/h1/ops/canned/com/hrrr/v4.1/hrrr._DAY_/conus/hrrr.t%{cyc}%z.wrfprsf%{fhr}%.grib2|_DAY_/hrrr_|00 06 12 18|01|48|01|01|grb2
-hrrrak|  |  |000|/lfs/h1/ops/canned/com/hrrr/v4.1/hrrr._DAY_/alaska/hrrr.t%{cyc}%z.wrfprsf%{fhr}%.ak.grib2|_DAY_/hrrrak_|03 09 15 21|01|18|01|01|grb2
-hrrrak|  |  |000|/lfs/h1/ops/canned/com/hrrr/v4.1/hrrr._DAY_/alaska/hrrr.t%{cyc}%z.wrfprsf%{fhr}%.ak.grib2|_DAY_/hrrrak_|00 06 12 18|01|48|01|01|grb2
-aknest|     |   |000|/lfs/h1/ops/canned/com/nam/v4.2/nam._DAY_/nam.t%{cyc}%z.alaskanest.hiresf%{fhr}%.tm00.grib2|_DAY_/aknest_|00 06 12 18|03|60|03|03|grb2
-hinest|     |   |000|/lfs/h1/ops/canned/com/nam/v4.2/nam._DAY_/nam.t%{cyc}%z.hawaiinest.hiresf%{fhr}%.tm00.grib2|_DAY_/hinest_|00 06 12 18|03|60|03|03|grb2
-prnest|     |   |000|/lfs/h1/ops/canned/com/nam/v4.2/nam._DAY_/nam.t%{cyc}%z.priconest.hiresf%{fhr}%.tm00.grib2|_DAY_/prnest_|00 06 12 18|03|60|03|03|grb2
-srarwctl|      |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.ctl.f%{fhr}%.grib2|_DAYm1_/srarwctl_|03 09 15 21|03|87|03|03|grb2
-srarwn1|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n1.f%{fhr}%.grib2|_DAYm1_/srarwn1_|03 09 15 21|03|87|03|03|grb2
-srarwn2|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n2.f%{fhr}%.grib2|_DAYm1_/srarwn2_|03 09 15 21|03|87|03|03|grb2
-srarwn3|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n3.f%{fhr}%.grib2|_DAYm1_/srarwn3_|03 09 15 21|03|87|03|03|grb2
-srarwn4|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n4.f%{fhr}%.grib2|_DAYm1_/srarwn4_|03 09 15 21|03|87|03|03|grb2
-srarwn5|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n5.f%{fhr}%.grib2|_DAYm1_/srarwn5_|03 09 15 21|03|87|03|03|grb2
-srarwn6|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n6.f%{fhr}%.grib2|_DAYm1_/srarwn6_|03 09 15 21|03|87|03|03|grb2
-srarwp1|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p1.f%{fhr}%.grib2|_DAYm1_/srarwp1_|03 09 15 21|03|87|03|03|grb2
-srarwp2|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p2.f%{fhr}%.grib2|_DAYm1_/srarwp2_|03 09 15 21|03|87|03|03|grb2
-srarwp3|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p3.f%{fhr}%.grib2|_DAYm1_/srarwp3_|03 09 15 21|03|87|03|03|grb2
-srarwp4|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p4.f%{fhr}%.grib2|_DAYm1_/srarwp4_|03 09 15 21|03|87|03|03|grb2
-srarwp5|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p5.f%{fhr}%.grib2|_DAYm1_/srarwp5_|03 09 15 21|03|87|03|03|grb2
-srarwp6|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p6.f%{fhr}%.grib2|_DAYm1_/srarwp6_|03 09 15 21|03|87|03|03|grb2
-srnmbctl|      |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.ctl.f%{fhr}%.grib2|_DAYm1_/srnmbctl_|03 09 15 21|03|87|03|03|grb2
-srnmbn1|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n1.f%{fhr}%.grib2|_DAYm1_/srnmbn1_|03 09 15 21|03|87|03|03|grb2
-srnmbn2|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n2.f%{fhr}%.grib2|_DAYm1_/srnmbn2_|03 09 15 21|03|87|03|03|grb2
-srnmbn3|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n3.f%{fhr}%.grib2|_DAYm1_/srnmbn3_|03 09 15 21|03|87|03|03|grb2
-srnmbn4|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n4.f%{fhr}%.grib2|_DAYm1_/srnmbn4_|03 09 15 21|03|87|03|03|grb2
-srnmbn5|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n5.f%{fhr}%.grib2|_DAYm1_/srnmbn5_|03 09 15 21|03|87|03|03|grb2
-srnmbn6|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n6.f%{fhr}%.grib2|_DAYm1_/srnmbn6_|03 09 15 21|03|87|03|03|grb2
-srnmbp1|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p1.f%{fhr}%.grib2|_DAYm1_/srnmbp1_|03 09 15 21|03|87|03|03|grb2
-srnmbp2|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p2.f%{fhr}%.grib2|_DAYm1_/srnmbp2_|03 09 15 21|03|87|03|03|grb2
-srnmbp3|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p3.f%{fhr}%.grib2|_DAYm1_/srnmbp3_|03 09 15 21|03|87|03|03|grb2
-srnmbp4|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p4.f%{fhr}%.grib2|_DAYm1_/srnmbp4_|03 09 15 21|03|87|03|03|grb2
-srnmbp5|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p5.f%{fhr}%.grib2|_DAYm1_/srnmbp5_|03 09 15 21|03|87|03|03|grb2
-srnmbp6|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p6.f%{fhr}%.grib2|_DAYm1_/srnmbp6_|03 09 15 21|03|87|03|03|grb2
-srmean|      |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/ensprod/sref.t%{cyc}%z.pgrb212.mean_fvs.f%{fhr}%|_DAYm1_/srmean_|03 09 15 21|03|87|03|
-srfreqm|       |   |000|/lfs/h1/ops/canned/com/sref/v7.1/sref._DAYm1_/%{cyc}%/ensprod_biasc/meanprecip.sref.f%{fhr}%|_DAYm1_/srfreqm_|03 09 15 21|03|87|03|
-firewx|       |   |000|/lfs/h1/ops/canned/com/nam/v4.2/nam._DAY_/nam.t%{cyc}%z.firewxnest.hiresf%{fhr}%.tm00.grib2|_DAY_/firewx_|00 06 12 18|01|36|01|01|grb2
+rap|   |   |000|/lfs/h1/ops/canned/com/rap/_verRAP_/rap._DAY_/rap.t%{cyc}%z.awip32f%{fhr}%.grib2|_DAY_/rap_|03 09 15 21|01|51|01|01|grb2
+rap|   |   |000|/lfs/h1/ops/canned/com/rap/_verRAP_/rap._DAY_/rap.t%{cyc}%z.awip32f%{fhr}%.grib2|_DAY_/rap_|00 06 12 18|01|21|01|01|grb2
+hrrr|   |   |000|/lfs/h1/ops/canned/com/hrrr/_verHRRR_/hrrr._DAY_/conus/hrrr.t%{cyc}%z.wrfprsf%{fhr}%.grib2|_DAY_/hrrr_|00 06 12 18|01|48|01|01|grb2
+hrrrak|  |  |000|/lfs/h1/ops/canned/com/hrrr/_verHRRR_/hrrr._DAY_/alaska/hrrr.t%{cyc}%z.wrfprsf%{fhr}%.ak.grib2|_DAY_/hrrrak_|03 09 15 21|01|18|01|01|grb2
+hrrrak|  |  |000|/lfs/h1/ops/canned/com/hrrr/_verHRRR_/hrrr._DAY_/alaska/hrrr.t%{cyc}%z.wrfprsf%{fhr}%.ak.grib2|_DAY_/hrrrak_|00 06 12 18|01|48|01|01|grb2
+aknest|     |   |000|/lfs/h1/ops/canned/com/nam/_verNAM_/nam._DAY_/nam.t%{cyc}%z.alaskanest.hiresf%{fhr}%.tm00.grib2|_DAY_/aknest_|00 06 12 18|03|60|03|03|grb2
+hinest|     |   |000|/lfs/h1/ops/canned/com/nam/_verNAM_/nam._DAY_/nam.t%{cyc}%z.hawaiinest.hiresf%{fhr}%.tm00.grib2|_DAY_/hinest_|00 06 12 18|03|60|03|03|grb2
+prnest|     |   |000|/lfs/h1/ops/canned/com/nam/_verNAM_/nam._DAY_/nam.t%{cyc}%z.priconest.hiresf%{fhr}%.tm00.grib2|_DAY_/prnest_|00 06 12 18|03|60|03|03|grb2
+srarwctl|      |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.ctl.f%{fhr}%.grib2|_DAYm1_/srarwctl_|03 09 15 21|03|87|03|03|grb2
+srarwn1|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n1.f%{fhr}%.grib2|_DAYm1_/srarwn1_|03 09 15 21|03|87|03|03|grb2
+srarwn2|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n2.f%{fhr}%.grib2|_DAYm1_/srarwn2_|03 09 15 21|03|87|03|03|grb2
+srarwn3|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n3.f%{fhr}%.grib2|_DAYm1_/srarwn3_|03 09 15 21|03|87|03|03|grb2
+srarwn4|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n4.f%{fhr}%.grib2|_DAYm1_/srarwn4_|03 09 15 21|03|87|03|03|grb2
+srarwn5|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n5.f%{fhr}%.grib2|_DAYm1_/srarwn5_|03 09 15 21|03|87|03|03|grb2
+srarwn6|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.n6.f%{fhr}%.grib2|_DAYm1_/srarwn6_|03 09 15 21|03|87|03|03|grb2
+srarwp1|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p1.f%{fhr}%.grib2|_DAYm1_/srarwp1_|03 09 15 21|03|87|03|03|grb2
+srarwp2|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p2.f%{fhr}%.grib2|_DAYm1_/srarwp2_|03 09 15 21|03|87|03|03|grb2
+srarwp3|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p3.f%{fhr}%.grib2|_DAYm1_/srarwp3_|03 09 15 21|03|87|03|03|grb2
+srarwp4|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p4.f%{fhr}%.grib2|_DAYm1_/srarwp4_|03 09 15 21|03|87|03|03|grb2
+srarwp5|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p5.f%{fhr}%.grib2|_DAYm1_/srarwp5_|03 09 15 21|03|87|03|03|grb2
+srarwp6|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_arw.t%{cyc}%z.pgrb212.p6.f%{fhr}%.grib2|_DAYm1_/srarwp6_|03 09 15 21|03|87|03|03|grb2
+srnmbctl|      |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.ctl.f%{fhr}%.grib2|_DAYm1_/srnmbctl_|03 09 15 21|03|87|03|03|grb2
+srnmbn1|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n1.f%{fhr}%.grib2|_DAYm1_/srnmbn1_|03 09 15 21|03|87|03|03|grb2
+srnmbn2|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n2.f%{fhr}%.grib2|_DAYm1_/srnmbn2_|03 09 15 21|03|87|03|03|grb2
+srnmbn3|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n3.f%{fhr}%.grib2|_DAYm1_/srnmbn3_|03 09 15 21|03|87|03|03|grb2
+srnmbn4|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n4.f%{fhr}%.grib2|_DAYm1_/srnmbn4_|03 09 15 21|03|87|03|03|grb2
+srnmbn5|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n5.f%{fhr}%.grib2|_DAYm1_/srnmbn5_|03 09 15 21|03|87|03|03|grb2
+srnmbn6|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.n6.f%{fhr}%.grib2|_DAYm1_/srnmbn6_|03 09 15 21|03|87|03|03|grb2
+srnmbp1|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p1.f%{fhr}%.grib2|_DAYm1_/srnmbp1_|03 09 15 21|03|87|03|03|grb2
+srnmbp2|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p2.f%{fhr}%.grib2|_DAYm1_/srnmbp2_|03 09 15 21|03|87|03|03|grb2
+srnmbp3|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p3.f%{fhr}%.grib2|_DAYm1_/srnmbp3_|03 09 15 21|03|87|03|03|grb2
+srnmbp4|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p4.f%{fhr}%.grib2|_DAYm1_/srnmbp4_|03 09 15 21|03|87|03|03|grb2
+srnmbp5|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p5.f%{fhr}%.grib2|_DAYm1_/srnmbp5_|03 09 15 21|03|87|03|03|grb2
+srnmbp6|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/pgrb/sref_nmb.t%{cyc}%z.pgrb212.p6.f%{fhr}%.grib2|_DAYm1_/srnmbp6_|03 09 15 21|03|87|03|03|grb2
+srmean|      |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/ensprod/sref.t%{cyc}%z.pgrb212.mean_fvs.f%{fhr}%|_DAYm1_/srmean_|03 09 15 21|03|87|03|
+srfreqm|       |   |000|/lfs/h1/ops/canned/com/sref/_verSREF_/sref._DAYm1_/%{cyc}%/ensprod_biasc/meanprecip.sref.f%{fhr}%|_DAYm1_/srfreqm_|03 09 15 21|03|87|03|
+firewx|       |   |000|/lfs/h1/ops/canned/com/nam/_verNAM_/nam._DAY_/nam.t%{cyc}%z.firewxnest.hiresf%{fhr}%.tm00.grib2|_DAY_/firewx_|00 06 12 18|01|36|01|01|grb2
 nssl4arw|       |   |000|/lfs/h1/ops/canned/dcom/_DAY_/wgrbbul/nssl_wrf/wrf4nssl__DAY_%{cyc}%.f%{fhr}%|_DAY_/nssl4arw_|00 12|03|36|03|

@@ -22,7 +22,8 @@ export conusarw_ver=v8.1
 export conusarw2_ver=v8.1
 export firewxcs_ver=v4.2
 export conusfv3_ver=v8.1
-export gec00_ver=v12.2
+#export gec00_ver=v12.2
+export gefs_ver=v12.2
 export gfs_ver=v16.2
 export hrrr_ver=v4.1
 #export medley_ver=_______ #Created using ush/verf_precip_medley24.sh 
@@ -38,5 +39,6 @@ export pcpanl_ver=v4.1
 export href_ver=v3.1
 export ccpa_ver=v4.2
 
-export COMPATH=/lfs/h1/ops/canned/com/pcpanl:/lfs/h1/ops/canned/com/ccpa:/lfs/h1/ops/canned/com/href:/lfs/h1/ops/canned/com/nam
+export DATAFS=h1
+export COMPATH=/lfs/h1/ops/canned/com/pcpanl:/lfs/h1/ops/canned/com/ccpa:/lfs/h1/ops/canned/com/href:/lfs/h1/ops/canned/com/nam:/lfs/h1/ops/canned/com/gfs:/lfs/h1/ops/canned/com/gefs:/lfs/h1/ops/canned/com/hiresw:/lfs/h1/ops/canned/com/sref:/lfs/h1/ops/canned/com/rap:/lfs/h1/ops/canned/com/hrrr
 export DCOMROOT=/lfs/h1/ops/canned/dcom

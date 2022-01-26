@@ -236,6 +236,13 @@ do
       echo "$lbucket"  >>input_card.${modnam}
 
       sed -e "s/_DAY_/$day/g" -e "s/_DAYm1_/$daym1/g" input_card.${modnam} >input_card.${modnam}.1
+      perl -pi -e s/_verGEFS_/${gefs_ver}/g input_card.${modnam}.1
+      perl -pi -e s/_verGFS_/${gfs_ver}/g input_card.${modnam}.1
+      perl -pi -e s/_verNAM_/${nam_ver}/g input_card.${modnam}.1
+      perl -pi -e s/_verHIRESW_/${hiresw_ver}/g input_card.${modnam}.1
+      perl -pi -e s/_verRAP_/${rap_ver}/g input_card.${modnam}.1
+      perl -pi -e s/_verHRRR_/${hrrr_ver}/g input_card.${modnam}.1
+      perl -pi -e s/_verSREF_/${sref_ver}/g input_card.${modnam}.1
       mv input_card.${modnam}.1 input_card.${modnam}
     
       $USHverf_precip/verf_precip_getpptfcst.sh input_card.${modnam}
@@ -254,6 +261,7 @@ do
      rm -f input_card
      cp $PARMverf_precip/verf_precip_input_$mod input_card
      sed -e "s/_DAY_/$day/g" -e "s/_DAYm1_/$daym1/g" input_card >input_card.$mod
+     perl -pi -e s/_verNAM_/${nam_ver}/g input_card.$mod
 
      $USHverf_precip/verf_precip_getpptndas.sh input_card.$mod
    fi

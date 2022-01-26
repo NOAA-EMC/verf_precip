@@ -1,6 +1,6 @@
 #!/bin/sh
 set -x
-module purge
+module reset
 module use ../modulefiles
 module load VERF_PRECIP
 
